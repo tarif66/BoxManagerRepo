@@ -1,9 +1,9 @@
-import { StyleSheet,View, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-export default function HomeScreen() {
+export default function TabTwoScreen() {
   return (
     <View style={s.container}>
-      <Text style={s.text}>Accueil
+      <Text style={s.text}>Inventaire
       </Text>
     </View>
   );
