@@ -6,6 +6,17 @@ import MapView, { Marker } from 'react-native-maps';
 export default function TabTwoScreen() {
   const [location, setLocation] = React.useState(null);
 
+  const pointsOfInterest = [
+    {
+      id: 1,
+      title: 'Feneuil Pointillart',
+      description: 'Maison de Champagne avec ',
+      latitude: 49.1738,
+      longitude: 3.9561,
+      numberOfBoxes: '10 caisses',
+    }
+  ]
+
   return (
     <View style={s.container}>
       <MapView 
@@ -18,8 +29,19 @@ export default function TabTwoScreen() {
         }}
         showsUserLocation={true}
         showsMyLocationButton={true}
-        />
-      
+        >
+        {pointsOfInterest.map((poi) => (
+          <Marker
+            key={poi.id}
+            coordinate={{ latitude: poi.latitude, longitude: poi.longitude }}
+            title={poi.title}
+            description={poi.description + poi.numberOfBoxes}
+            pinColor="blue"
+            
+          />
+        ))}
+      </MapView>
+    
     </View>
   );
 }
