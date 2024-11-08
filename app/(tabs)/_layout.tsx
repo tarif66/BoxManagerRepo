@@ -17,9 +17,9 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: 'Caisses',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color={color} />
           ),
         }}
       />
@@ -33,11 +33,11 @@ export default function TabLayout() {
         }}
       />
             <Tabs.Screen
-        name="inventaire"
+        name="carte"
         options={{
-          title: 'Inventaire',
+          title: 'Carte',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color={color} />
+            <TabBarIcon name={focused ? 'map' : 'map-outline'} color={color} />
           ),
         }}
       />

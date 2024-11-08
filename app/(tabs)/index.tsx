@@ -1,10 +1,10 @@
-import { StyleSheet,View, Text } from 'react-native';
+import { StyleSheet,View } from 'react-native';
+import BoxCard from "../../components/box-card"
 
 export default function HomeScreen() {
   return (
     <View style={s.container}>
-      <Text style={s.text}>Accueil
-      </Text>
+      <BoxCard/>
     </View>
   );
 }
@@ -13,7 +13,7 @@ const s = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 1,
+    flex: 1
   },
   text: {
     alignItems: 'center',

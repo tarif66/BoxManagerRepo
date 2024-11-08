@@ -1,21 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
+import { CLIENTS } from '../../components/models/client-list';
 
 
 export default function TabTwoScreen() {
-  const [location, setLocation] = React.useState(null);
-
-  const pointsOfInterest = [
-    {
-      id: 1,
-      title: 'Feneuil Pointillart',
-      description: 'Maison de Champagne avec ',
-      latitude: 49.1738,
-      longitude: 3.9561,
-      numberOfBoxes: '10 caisses',
-    }
-  ]
+  const [clients, setClients] = React.useState(CLIENTS);
 
   return (
     <View style={s.container}>
@@ -30,14 +20,19 @@ export default function TabTwoScreen() {
         showsUserLocation={true}
         showsMyLocationButton={true}
         >
-        {pointsOfInterest.map((poi) => (
+
+        {clients.map(client => (
           <Marker
-            key={poi.id}
-            coordinate={{ latitude: poi.latitude, longitude: poi.longitude }}
-            title={poi.title}
-            description={poi.description + poi.numberOfBoxes}
-            pinColor="blue"
-            
+            key={client.id}
+            coordinate={{ latitude: client.latitude, longitude: client.longitude }}
+            title={client.title}
+            description={client.numberOfBoxes.toString()}
+            pinColor={
+                client.problem===true? "red" :
+                client.numberOfBoxes>0 ? 
+                "green" 
+                : "yellow" 
+              }
           />
         ))}
       </MapView>
