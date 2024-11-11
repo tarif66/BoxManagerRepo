@@ -1,10 +1,12 @@
-import { StyleSheet,View } from 'react-native';
+import { StyleSheet,View, Text } from 'react-native';
 import BoxCard from "../../components/box-card"
 
 export default function HomeScreen() {
   return (
     <View style={s.container}>
-      <BoxCard/>
+      <Text>Hello
+
+      </Text>
     </View>
   );
 }
