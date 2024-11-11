@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { CLIENTS } from '../../components/models/client-list';
-import { box } from '../../components/models/box';
+import { LOCATIONS } from '../../components/models/mock-locations';
+import Location from '../../components/models/location';
 
 
 export default function TabTwoScreen() {
-  const [clients, setClients] = React.useState(CLIENTS);
+  const [locations, setLocations] = React.useState(LOCATIONS);
 
   return (
     <View style={s.container}>
@@ -22,15 +22,15 @@ export default function TabTwoScreen() {
         showsMyLocationButton={true}
         >
 
-        {clients.map(client => (
+        {locations.map(location => (
           <Marker
-            key={client.id}
-            coordinate={{ latitude: client.latitude, longitude: client.longitude }}
-            title={client.title}
-            description={client.numberOfBoxes.toString()}
+            key={location.id}
+            coordinate={{ latitude: location.latitude, longitude: location.longitude }}
+            title={location.brand} 
+            description= {`${location.name}, ${location.numberOfBoxes} caisses`} 
             pinColor={
-                client.problem===true? "red" :
-                client.numberOfBoxes>0 ? 
+                // client.problem===true? "red" :
+                location.numberOfBoxes>0 ? 
                 "green" 
                 : "yellow" 
               }

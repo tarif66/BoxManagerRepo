@@ -5,7 +5,7 @@ import BoxCard from "../../components/box-card"
 import Box from "../../components/models/box"
 import { BOXES } from "../../components/models/mock-boxes"
 
-export default function HomeScreen() {
+export default function TabTwoScreen() {
     const [boxes, setBoxes] = useState<Box[]>(BOXES);
 
   return (
