@@ -18,8 +18,8 @@ export default function TabTwoScreen() {
           latitudeDelta: 1.5,    // Set the latitude span for the viewport
           longitudeDelta: 1.5,   // Set the longitude span for the viewport
         }}
-        showsUserLocation={true}
-        showsMyLocationButton={true}
+          showsUserLocation={true}
+          showsMyLocationButton={true}
         >
 
         {locations.map(location => (

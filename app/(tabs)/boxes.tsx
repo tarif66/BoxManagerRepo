@@ -6,7 +6,7 @@ import BoxCard from "../../components/box-card"
 import Box from "../../components/models/box"
 import { BOXES } from "../../components/models/mock-boxes"
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 
 export default function TabTwoScreen() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -36,6 +36,10 @@ export default function TabTwoScreen() {
         </Modal>
         
         <ScrollView>
+        <Pressable
+            style={[styles.button, styles.buttonOpen]}>
+            <Link style={styles.textStyle} href="/(tabs)/map">Show Map</Link>
+        </Pressable>
           <View style={s.container}>
               <View style={s.row}>
               {boxes.map(boxMap => (
@@ -45,10 +49,6 @@ export default function TabTwoScreen() {
                     style={[styles.button, styles.buttonOpen]}
                     onPress={() => setModalVisible(true)}>
                     <Text style={styles.textStyle}>Show Modal</Text>
-                    </Pressable>
-                    <Pressable
-                      style={[styles.button, styles.buttonOpen]}>
-                      <Link style={styles.textStyle} href="/(tabs)/map">Show Map</Link>
                     </Pressable>
                   </View>
               ))}
