@@ -2,29 +2,39 @@ import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Box from './models/box';
 import { Link, router, useRouter } from 'expo-router';
+import { BOXES } from './models/mock-boxes';
 
 type Props = {
   boxProp: Box;
+  trackProblemProp: (box: Box) => Box[];
 }
 
-export default function BoxCard({boxProp}:Props) {
+export default function BoxCard({boxProp, trackProblemProp}:Props) {
   const router = useRouter();
 
   return (
     
     <View style={s.container1}>
-      <Ionicons name="cube-outline" size={32} color="green" />
+      {boxProp.problem?
+      <Ionicons name="warning-outline" size={32} color="green" />:
+      <Ionicons name="cube-outline" size={32} color="green" />}
       <View style={s.container2}>      
         <Text style={s.title}>Caisse #{boxProp.id}</Text>
         <Text>{boxProp.client}</Text>
         <Text>{boxProp.numberOfBottles} bouteilles</Text>
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}
-          onPress={() => {
-            router.push(`/map?latitude=${boxProp.latitude}&longitude=${boxProp.longitude}`);
-            }}>
-        <Text style={styles.textStyle}>Show Map</Text>
-      </Pressable>
+        {boxProp.problem?
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => {trackProblemProp(boxProp)}}
+            >
+            <Text style={styles.textStyle}>Annuler le problème</Text>
+          </Pressable>:
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => {trackProblemProp(boxProp)}}
+            >
+            <Text style={styles.textStyle}>Signaler un problème</Text>
+          </Pressable>}
       </View>
     </View>
   );

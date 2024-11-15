@@ -12,6 +12,21 @@ export default function TabTwoScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [boxes, setBoxes] = useState<Box[]>(BOXES);
   
+  function trackProblem(box: Box) {
+    const updatedBox = {
+      ...box,
+      problem: !box.problem
+    }
+
+    const indexToUpdate = boxes.findIndex(
+      (box) => box.id === updatedBox.id
+    );
+
+    const updatedBoxList = [...boxes];
+    updatedBoxList[indexToUpdate] = updatedBox;
+    setBoxes(updatedBoxList);
+  }
+
   return (
     <SafeAreaProvider>
       <SafeAreaView style={styles.centeredView}>
@@ -44,7 +59,7 @@ export default function TabTwoScreen() {
               <View style={s.row}>
               {boxes.map(boxMap => (
                   <View>
-                    <BoxCard key={boxMap.id} boxProp={boxMap}/>
+                    <BoxCard key={boxMap.id} boxProp={boxMap} trackProblemProp={trackProblem}/>
                     <Pressable
                     style={[styles.button, styles.buttonOpen]}
                     onPress={() => setModalVisible(true)}>
