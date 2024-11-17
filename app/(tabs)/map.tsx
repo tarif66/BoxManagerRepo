@@ -3,21 +3,28 @@ import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import { LOCATIONS } from '../../components/models/mock-locations';
 import Location from '../../components/models/location';
+import { useSearchParams } from 'expo-router/build/hooks';
 
 
 export default function TabTwoScreen() {
   const [locations, setLocations] = React.useState(LOCATIONS);
+  const searchParams = useSearchParams();
+  
+  const latitude = searchParams.get('latitude');
+  const longitude = searchParams.get('longitude');
+
+  const initialRegion = {
+    latitude: latitude ? parseFloat(latitude) : 49.2441,
+    longitude: longitude ? parseFloat(longitude) : 4.0408,
+    latitudeDelta: 1.5,
+    longitudeDelta: 1.5,
+  };
 
   return (
     <View style={s.container}>
       <MapView 
         style={s.map} 
-        initialRegion={{
-          latitude: 49.2441,       // Set the initial latitude
-          longitude: 4.0408,     // Set the initial longitude
-          latitudeDelta: 1.5,    // Set the latitude span for the viewport
-          longitudeDelta: 1.5,   // Set the longitude span for the viewport
-        }}
+        initialRegion={initialRegion}
           showsUserLocation={true}
           showsMyLocationButton={true}
         >

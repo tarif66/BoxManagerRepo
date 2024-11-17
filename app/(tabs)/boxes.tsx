@@ -50,18 +50,7 @@ export default function TabTwoScreen() {
             </View>
           </View>
         </Modal>
-        <Pressable
-            style={[styles.button, styles.buttonOpen]}
-            >
-            <Link
-              href={{
-                pathname: '/(tabs)/map',
-                params: { id: 3 },
-              }}
-              asChild
-            ></Link>
-            <Text style={styles.textStyle}>Trouver</Text>
-        </Pressable>
+
         <ScrollView>
           <View style={s.container}>
               <View style={s.row}>
