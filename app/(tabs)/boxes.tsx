@@ -12,20 +12,21 @@ export default function TabTwoScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [boxes, setBoxes] = useState<Box[]>(BOXES);
   
-  function trackProblem(box: Box) {
-    const updatedBox = {
-      ...box,
-      problem: !box.problem
+  function trackProblem(box: Box): Box[] {
+      const updatedBox = {
+        ...box,
+        problem: !box.problem
+      }
+  
+      const indexToUpdate = boxes.findIndex(
+        (box) => box.id === updatedBox.id
+      );
+  
+      const updatedBoxList = [...boxes];
+      updatedBoxList[indexToUpdate] = updatedBox;
+      setBoxes(updatedBoxList);
+      return updatedBoxList;
     }
-
-    const indexToUpdate = boxes.findIndex(
-      (box) => box.id === updatedBox.id
-    );
-
-    const updatedBoxList = [...boxes];
-    updatedBoxList[indexToUpdate] = updatedBox;
-    setBoxes(updatedBoxList);
-  }
 
   return (
     <SafeAreaProvider>
@@ -49,12 +50,19 @@ export default function TabTwoScreen() {
             </View>
           </View>
         </Modal>
-        
-        <ScrollView>
         <Pressable
-            style={[styles.button, styles.buttonOpen]}>
-            <Link style={styles.textStyle} href="/(tabs)/map">Show Map</Link>
+            style={[styles.button, styles.buttonOpen]}
+            >
+            <Link
+              href={{
+                pathname: '/(tabs)/map',
+                params: { id: 3 },
+              }}
+              asChild
+            ></Link>
+            <Text style={styles.textStyle}>Trouver</Text>
         </Pressable>
+        <ScrollView>
           <View style={s.container}>
               <View style={s.row}>
               {boxes.map(boxMap => (
