@@ -1,6 +1,7 @@
 import { StyleSheet,View, Text, Pressable } from 'react-native';
 import BoxCard from "../../components/box-card"
 import { Link } from 'expo-router';
+import Modal from '../modal';
 
 export default function HomeScreen() {
   return (
@@ -17,12 +18,12 @@ export default function HomeScreen() {
             >
               <Text style={styles.textStyle}>Trouver Berlin</Text>
             </Link>
-            <Text style={styles.textStyle}>Trouver Berlin</Text>
+
         </Pressable>
+        <Modal/>
     </View>
   );
 }
-
 
 const s = StyleSheet.create({
   container: {
