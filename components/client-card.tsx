@@ -1,50 +1,79 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
-import Client from './models/client';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+
 
 type Props = {
-  clientProp: Client;
+  client:string;
+  location:string;
 }
 
-export default function ClientCard({clientProp}:Props) {
-  return (
+export const ClientCard = ({client, location}:Props) => {
+  const [expanded, setExpanded] = useState(false);
+  const [animation] = useState(new Animated.Value(0));
+
+  const toggleExpand = () => {
+    const toValue = expanded ? 0 : 1;
     
-    <View style={s.container1}>
-      <Ionicons name="people-outline" size={32} color="green" />
-      <View style={s.container2}>      
-        <Text style={s.title}>{clientProp.brand}</Text>
-        <Text>{clientProp.brand}</Text>
-      </View>
+    Animated.timing(animation, {
+      toValue,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+    
+    setExpanded(!expanded);
+  };
+
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity 
+        onPress={toggleExpand}
+        style={styles.header}
+      >
+        <Text style={styles.title}>{client}</Text>
+        <Text>lieu</Text>
+        <Animated.View >
+          <AntDesign name="caretdown" size={16} color="#333" />
+        </Animated.View>
+      </TouchableOpacity>
+      
+      {expanded && (
+        <View style={styles.content}>
+          <Text>{location}</Text>
+        </View>
+      )}
     </View>
   );
-}
+};
 
-const s = StyleSheet.create({
-  container1: {
-    display: 'flex',
-    padding: 8,
-    alignItems: 'center',
-    gap: 8,
-    alignSelf: 'stretch',
-    width: '90%',
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    borderColor: 'drakgrey',
-    borderWidth: 1,
-    borderRadius: 3,
-    
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fff',
+    padding: 10,
+    borderRadius: 8,
+    marginVertical: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+    elevation: 3,
   },
-  container2: {
-    display: 'flex',
-    width: 300,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: 8,
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
   },
   title: {
-    fontWeight: "bold",
-    color: "black",
-    fontSize: 16
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  content: {
+    padding: 10,
+    paddingTop: 0,
   },
 });
-
