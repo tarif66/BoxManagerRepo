@@ -20,28 +20,29 @@ export default function TabLayout() {
         options={{
           title: 'Accueil',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+            <TabBarIcon name={focused ? 'pie-chart' : 'pie-chart-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="boxes"
+        name="dispatch"
         options={{
-          title: 'Caisses',
+          title: 'Dispatch',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color={color} />
+            <TabBarIcon name={focused ? 'business' : 'business-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="clients"
+        name="entretien"
         options={{
-          title: 'Clients',
+          title: 'Entretien',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'people' : 'people-outline'} color={color} />
+            <TabBarIcon name={focused ? 'construct' : 'construct-outline'} color={color} />
           ),
         }}
       />
+
             <Tabs.Screen
         name="map"
         options={{
