@@ -10,12 +10,14 @@ export default function TabTwoScreen() {
   
   const latitude = searchParams.get('latitude');
   const longitude = searchParams.get('longitude');
+  const latitudeDelta = searchParams.get('latitudeDelta');
+  const longitudeDelta = searchParams.get('longitudeDelta');
 
   const initialRegion = {
     latitude: latitude ? parseFloat(latitude) : 47.3712,
     longitude: longitude ? parseFloat(longitude) : 2.0,
-    latitudeDelta: 14,
-    longitudeDelta: 14,
+    latitudeDelta: latitudeDelta ? parseFloat(latitudeDelta): 14,
+    longitudeDelta: longitudeDelta ? parseFloat(longitudeDelta): 14,
   };
 
   return (

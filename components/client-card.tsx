@@ -3,6 +3,8 @@ import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native
 import { AntDesign } from '@expo/vector-icons';
 import Client from './models/client';
 import Location from './models/location' 
+import { Pressable } from 'react-native-gesture-handler';
+import { Link } from 'expo-router';
 
 
 interface ClientCardProps {
@@ -49,7 +51,17 @@ export const ClientCard: React.FC<ClientCardProps> = ({ clientProp }) => {
       {expanded && (
         <View style={s.content}>
           {clientProp.locations.map((locationMap: Location) => (
-            <Text key={locationMap.id}>{locationMap.name}</Text>
+            <Pressable key={locationMap.id}>
+              <Link
+              href={{
+                pathname: '/(tabs)/map',
+                params: { longitude: locationMap.longitude, latitude: locationMap.latitude, latitudeDelta: 0.5, longitudeDelta: 0.5 },
+              }}
+              asChild
+            >              
+                <Text >{locationMap.name}</Text>
+              </Link>
+            </Pressable>
           ))}
         </View>
       )}
