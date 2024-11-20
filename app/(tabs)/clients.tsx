@@ -7,19 +7,16 @@ import Client from "../../components/models/client"
 import { CLIENTS } from "../../components/models/mock-clients"
 
 export default function TabTwoScreen() {
-    const [clients, setClients] = useState<Client[]>(CLIENTS);
+  const [clients] = useState<Client[]>(CLIENTS);
 
   return (
     <ScrollView>
-        {/* <View style={s.container}>
-            <View style={s.row}>
-            {clients.map(clientMap => (
-                <ClientCard key={clientMap.id} clientProp={clientMap}/>
-            ))}
-            </View>    
-        </View> */}
-        
-    <ClientCard client="Leroy Merlin" location="Reims"></ClientCard>
+      <View style={s.container}>
+          <View style={s.row}>
+            {clients.map((client: Client) => (
+              <ClientCard clientProp={client}/>))}
+          </View>    
+      </View>
     </ScrollView>
   );
 }
@@ -33,7 +30,7 @@ const s = StyleSheet.create({
   },
 
   row: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: 'center',
     gap: 16,

@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { LOCATIONS } from '../../components/models/mock-locations';
-import Location from '../../components/models/location';
 import { useSearchParams } from 'expo-router/build/hooks';
-
+import {LOCATIONS} from '/Users/olivierbrechon/BoxManager/components/models/mock-locations'; 
 
 export default function TabTwoScreen() {
   const [locations, setLocations] = React.useState(LOCATIONS);
@@ -14,10 +12,10 @@ export default function TabTwoScreen() {
   const longitude = searchParams.get('longitude');
 
   const initialRegion = {
-    latitude: latitude ? parseFloat(latitude) : 49.2441,
-    longitude: longitude ? parseFloat(longitude) : 4.0408,
-    latitudeDelta: 1.5,
-    longitudeDelta: 1.5,
+    latitude: latitude ? parseFloat(latitude) : 47.3712,
+    longitude: longitude ? parseFloat(longitude) : 2.0,
+    latitudeDelta: 14,
+    longitudeDelta: 14,
   };
 
   return (
@@ -33,7 +31,7 @@ export default function TabTwoScreen() {
           <Marker
             key={location.id}
             coordinate={{ latitude: location.latitude, longitude: location.longitude }}
-            title={location.brand} 
+            title="Lieu" 
             description= {`${location.name}, ${location.numberOfBoxes} caisses`} 
             pinColor={
                 // client.problem===true? "red" :
