@@ -2,8 +2,8 @@ import { StyleSheet, Text, View, Image, Pressable, SafeAreaView } from 'react-na
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Box from '../../components/models/box';
 import { Link, router, useRouter } from 'expo-router';
-import { BOXES } from '../../components/models/mock-boxes';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import {PickerDropdown} from '../../components/dropdown-menu';
 
 type Props = {
   boxProp: Box;
@@ -14,9 +14,13 @@ export default function MoveBoxModal({boxProp}:Props) {
 
   return (
 
-    <SafeAreaProvider>
+  <SafeAreaProvider 
+      >
     <SafeAreaView style={styles.centeredView}>
-            <Text>Modale</Text>
+            <View>
+              <Text>Modale</Text>
+              <PickerDropdown />
+            </View>
     </SafeAreaView>
   </SafeAreaProvider>
 
