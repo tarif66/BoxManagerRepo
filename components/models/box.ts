@@ -1,24 +1,18 @@
+import Location from './location';
+import Client from './client';
+
 export default class Box {
     id: number;
-    client: string;
-    numberOfBottles: number;
-    problem: boolean;
-    latitude: number;
-    longitude: number;
+    client: Client;
+    location: Location;
 
     constructor(
     id: number,
-    client: string = "Pas effectée",
-    numberOfBottles: number = 0,
-    problem: boolean = false,
-    latitude: number,
-    longitude: number
+    client: Client,
+    location: any,
     ) {
     this.id = id;
     this.client = client;
-    this.numberOfBottles = numberOfBottles;
-    this.problem = problem;
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.location = location;
     }
 }

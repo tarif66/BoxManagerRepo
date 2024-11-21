@@ -1,37 +1,30 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, Pressable, SafeAreaView } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import Box from './models/box';
+import Box from '../../components/models/box';
 import { Link, router, useRouter } from 'expo-router';
-import { BOXES } from './models/mock-boxes';
+import { BOXES } from '../../components/models/mock-boxes';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 type Props = {
   boxProp: Box;
 }
 
-export default function BoxCard({boxProp}:Props) {
+export default function MoveBoxModal({boxProp}:Props) {
   const router = useRouter();
 
   return (
-    
-    <View style={s.container1}>
-      <Ionicons name="cube-outline" size={32} color="green" />
-      <View style={s.container2}>      
-        <Text style={s.title}>Caisse #{boxProp.id}</Text>
-        <Text>{boxProp.client.toString()}</Text>
-        <Pressable
-          style={[styles.button, styles.buttonOpen]}>
-            
-            <Link
-              href={{
-                pathname:'/_/Consigne'}}
-            >        
-              <Text>open modal</Text>      
-            </Link>
-        </Pressable>
-      </View>
-    </View>
+
+    <SafeAreaProvider>
+    <SafeAreaView style={styles.centeredView}>
+            <Text>Modale</Text>
+    </SafeAreaView>
+  </SafeAreaProvider>
+
   );
 }
+
+
+
 
 const s = StyleSheet.create({
   container1: {

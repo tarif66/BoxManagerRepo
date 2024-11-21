@@ -11,22 +11,6 @@ import { Link, router } from 'expo-router';
 export default function TabTwoScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [boxes, setBoxes] = useState<Box[]>(BOXES);
-  
-  function trackProblem(box: Box): Box[] {
-      const updatedBox = {
-        ...box,
-        problem: !box.problem
-      }
-  
-      const indexToUpdate = boxes.findIndex(
-        (box) => box.id === updatedBox.id
-      );
-  
-      const updatedBoxList = [...boxes];
-      updatedBoxList[indexToUpdate] = updatedBox;
-      setBoxes(updatedBoxList);
-      return updatedBoxList;
-    }
 
   return (
     <SafeAreaProvider>
@@ -56,12 +40,7 @@ export default function TabTwoScreen() {
               <View style={s.row}>
               {boxes.map(boxMap => (
                   <View>
-                    <BoxCard key={boxMap.id} boxProp={boxMap} trackProblemProp={trackProblem}/>
-                    <Pressable
-                    style={[styles.button, styles.buttonOpen]}
-                    onPress={() => setModalVisible(true)}>
-                    <Text style={styles.textStyle}>Show Modal</Text>
-                    </Pressable>
+                    <BoxCard key={boxMap.id} boxProp={boxMap}/>
                   </View>
               ))}
               </View>
