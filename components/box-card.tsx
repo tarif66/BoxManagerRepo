@@ -23,7 +23,9 @@ export default function BoxCard({boxProp}:Props) {
             
             <Link
               href={{
-                pathname:'/_/Consigne'}}
+                pathname:'/_/Consigne',
+                params: { box: boxProp.id },
+              }}
             >        
               <Text>open modal</Text>      
             </Link>

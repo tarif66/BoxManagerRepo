@@ -4,13 +4,18 @@ import Box from '../../components/models/box';
 import { Link, router, useRouter } from 'expo-router';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {PickerDropdown} from '../../components/dropdown-menu';
+import { useSearchParams } from 'expo-router/build/hooks';
 
 type Props = {
   boxProp: Box;
 }
 
-export default function MoveBoxModal({boxProp}:Props) {
+export default function MoveBoxModal() {
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  
+  const box = searchParams.get('box');
 
   return (
 
@@ -18,7 +23,7 @@ export default function MoveBoxModal({boxProp}:Props) {
       >
     <SafeAreaView style={styles.centeredView}>
             <View>
-              <Text>Modale</Text>
+              <Text>Caisse#{box}</Text>
               <PickerDropdown />
             </View>
     </SafeAreaView>
