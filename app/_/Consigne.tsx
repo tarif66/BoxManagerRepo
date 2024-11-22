@@ -1,109 +1,21 @@
-import { StyleSheet, Text, View, Image, Pressable, SafeAreaView } from 'react-native';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import { PickerDropdown } from '@/components/dropdown-menu';
+import { useLocalSearchParams } from 'expo-router';
+import { View, Text } from 'react-native';
 import Box from '../../components/models/box';
-import { Link, router, useRouter } from 'expo-router';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import {PickerDropdown} from '../../components/dropdown-menu';
-import { useSearchParams } from 'expo-router/build/hooks';
+import { BOXES } from '../../components/models/mock-boxes';
+import { useState } from 'react';
 
-type Props = {
-  boxProp: Box;
-}
+export default function CaissePage() {
 
-export default function MoveBoxModal() {
-  const router = useRouter();
-
-  const searchParams = useSearchParams();
-  
-  const box = searchParams.get('box');
+  const [boxes, setBoxes] = useState<Box[]>(BOXES);
+  const { id } = useLocalSearchParams();
+  const box:Box | undefined = BOXES.find((box) => box.id.toString() === id);
 
   return (
-
-  <SafeAreaProvider 
-      >
-    <SafeAreaView style={styles.centeredView}>
-            <View>
-              <Text>Caisse#{box}</Text>
-              <PickerDropdown />
-            </View>
-    </SafeAreaView>
-  </SafeAreaProvider>
-
+    <View>
+      <Text>Caisse#{id}</Text>
+      <Text>Située à {box?.location.name}</Text>
+      {/* <PickerDropdown boxProp={box} /> */}
+    </View>
   );
 }
-
-
-
-
-const s = StyleSheet.create({
-  container1: {
-    display: 'flex',
-    padding: 8,
-    alignItems: 'center',
-    gap: 8,
-    alignSelf: 'stretch',
-    width: '90%',
-    flexDirection: 'row',
-    backgroundColor: 'white',
-    borderColor: 'drakgrey',
-    borderWidth: 1,
-    borderRadius: 3,
-    
-  },
-  container2: {
-    display: 'flex',
-    width: 300,
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    gap: 8,
-  },
-  title: {
-    fontWeight: "bold",
-    color: "black",
-    fontSize: 16
-  },
-});
-
-
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: 'center',
-  },
-});

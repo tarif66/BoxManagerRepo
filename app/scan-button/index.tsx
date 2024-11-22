@@ -3,7 +3,7 @@ import { Link, Stack } from "expo-router";
 
 import { useCameraPermissions } from "expo-camera";
 
-export default function Modal() {
+export default function ScanButton() {
   const [permission, requestPermission] = useCameraPermissions();
 
   const isPermissionGranted = Boolean(permission?.granted);

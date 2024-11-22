@@ -9,7 +9,7 @@ export default class Box {
     constructor(
     id: number,
     client: Client,
-    location: any,
+    location: Location,
     ) {
     this.id = id;
     this.client = client;
