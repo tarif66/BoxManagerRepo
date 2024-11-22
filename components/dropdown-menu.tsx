@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Box from './models/box';
+import Client from './models/client';
 
 
 interface PickerDropdownProps {
@@ -10,7 +11,9 @@ interface PickerDropdownProps {
 
 export const PickerDropdown = ({ boxProp }: PickerDropdownProps) => {
   const [selectedValue, setSelectedValue] = useState('');
-  const options = boxProp ? boxProp.location : Location;
+  const clientDP:Client = boxProp? boxProp.client : new Client(0, 'default', []);
+  const options: Location[] = boxProp ? clientDP.locations : [];
+
 
   return (
     <View style={styles.container}>
@@ -21,7 +24,7 @@ export const PickerDropdown = ({ boxProp }: PickerDropdownProps) => {
         style={styles.picker}
       >
         {options.map((option, index) => (
-          <Picker.Item key={index} label={option.name.toString()} value={option} />
+          <Picker.Item key={index} label={option.name} value={option.name} />
         ))}
       </Picker>
       <Text>Selected: {selectedValue}</Text>
@@ -37,10 +40,11 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
+      width: "100%",
     },
     picker: {
-      height: 50,
-      width: 200,
+      height: 200,
+      width: "100%",
     },
     dropdownButton: {
       width: 200,

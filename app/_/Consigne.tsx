@@ -11,11 +11,13 @@ export default function CaissePage() {
   const { id } = useLocalSearchParams();
   const box:Box | undefined = BOXES.find((box) => box.id.toString() === id);
 
+
+
   return (
     <View>
       <Text>Caisse#{id}</Text>
       <Text>Située à {box?.location.name}</Text>
-      {/* <PickerDropdown boxProp={box} /> */}
+      <PickerDropdown boxProp={box} />
     </View>
   );
 }
