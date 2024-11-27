@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Animated, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
-import Client from './models/client';
-import Location from './models/location' 
+import Client from '../app/models/client';
+import Location from '../app/models/location' 
 import { Pressable } from 'react-native-gesture-handler';
 import { Link } from 'expo-router';
 

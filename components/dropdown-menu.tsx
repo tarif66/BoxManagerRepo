@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import Box from './models/box';
-import Client from './models/client';
+import Box from '../app/models/box';
+import Client from '../app/models/client';
 
 
 interface PickerDropdownProps {

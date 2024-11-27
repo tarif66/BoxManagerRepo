@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import Box from './models/box';
+import Box from '../app/models/box';
 import { Link, router, useRouter } from 'expo-router';
-import { BOXES } from './models/mock-boxes';
+import { BOXES } from '../app/models/mock-boxes';
 
 type Props = {
   boxProp: Box;

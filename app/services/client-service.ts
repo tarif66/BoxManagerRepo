@@ -1,5 +1,5 @@
-import { CLIENTS } from "@/components/models/mock-clients";
-import Client from "@/components/models/client";
+import { CLIENTS } from "@/app/models/mock-clients";
+import Client from "@/app/models/client";
 
 
 export default class CleintService {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 
 import ClientService from '../services/client-service';
-import Client from '@/components/models/client';
+import Client from '../models/client';
 
 export default function TabTwoScreen() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -28,18 +28,21 @@ export default function TabTwoScreen() {
           showsMyLocationButton={true}
         >
 
-        {clients.map(client => (
-          <Marker
-            key={client.locations.id}
-            coordinate={{ latitude: client.locations.latitude, longitude: client.locations.longitude }}
+        {clients.map((client) => 
+          client.locations.map((location) => (
+            <Marker
+            key={`${client.id}-${location.id}`}
+            coordinate={{ latitude: location.latitude, longitude: location.longitude }}
             title={client.brand} 
-            description= {`${client.locations.name}, ${client.locations.numberOfBoxes} caisses`} 
+            description= {`${location.name}, ${location.numberOfBoxes} caisses`} 
             pinColor={
-              client.locations.numberOfBoxes>0 ? 
+              location.numberOfBoxes>0 ? 
                 "green" 
                 : "yellow" 
               }
           />
+          )
+
         ))}
       </MapView>
     
