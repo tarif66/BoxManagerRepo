@@ -1,7 +1,4 @@
-import { StyleSheet,View, Text, Pressable } from 'react-native';
-import BoxCard from "../../components/box-card"
-import { Link } from 'expo-router';
-import ScanButton from '../scan-button';
+import { StyleSheet,View } from 'react-native';
 
 export default function HomeScreen() {
   return (
@@ -24,25 +21,6 @@ const s = StyleSheet.create({
 
 
 
-const styles = StyleSheet.create({
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonOpen: {
-    backgroundColor: '#F194FF',
-  },
-  buttonClose: {
-    backgroundColor: '#2196F3',
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-
-});
 
 
 

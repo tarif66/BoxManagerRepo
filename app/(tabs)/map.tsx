@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import { useSearchParams } from 'expo-router/build/hooks';
-import {LOCATIONS} from '/Users/olivierbrechon/BoxManager/components/models/mock-locations'; 
+
+import ClientService from '../services/client-service';
+import Client from '@/components/models/client';
 
 export default function TabTwoScreen() {
-  const [locations, setLocations] = React.useState(LOCATIONS);
-  const searchParams = useSearchParams();
-  
-  const latitude = searchParams.get('latitude');
-  const longitude = searchParams.get('longitude');
-  const latitudeDelta = searchParams.get('latitudeDelta');
-  const longitudeDelta = searchParams.get('longitudeDelta');
+  const [clients, setClients] = useState<Client[]>([]);
+
+  useEffect(() => {
+    ClientService.getClients().then(clients => setClients(clients));
+  }, []);
 
   const initialRegion = {
-    latitude: latitude ? parseFloat(latitude) : 47.3712,
-    longitude: longitude ? parseFloat(longitude) : 2.0,
-    latitudeDelta: latitudeDelta ? parseFloat(latitudeDelta): 14,
-    longitudeDelta: longitudeDelta ? parseFloat(longitudeDelta): 14,
+    latitude: 47.3712,
+    longitude: 2.0,
+    latitudeDelta: 14,
+    longitudeDelta: 14,
   };
 
   return (
@@ -29,15 +28,14 @@ export default function TabTwoScreen() {
           showsMyLocationButton={true}
         >
 
-        {locations.map(location => (
+        {clients.map(client => (
           <Marker
-            key={location.id}
-            coordinate={{ latitude: location.latitude, longitude: location.longitude }}
-            title="Lieu" 
-            description= {`${location.name}, ${location.numberOfBoxes} caisses`} 
+            key={client.locations.id}
+            coordinate={{ latitude: client.locations.latitude, longitude: client.locations.longitude }}
+            title={client.brand} 
+            description= {`${client.locations.name}, ${client.locations.numberOfBoxes} caisses`} 
             pinColor={
-                // client.problem===true? "red" :
-                location.numberOfBoxes>0 ? 
+              client.locations.numberOfBoxes>0 ? 
                 "green" 
                 : "yellow" 
               }

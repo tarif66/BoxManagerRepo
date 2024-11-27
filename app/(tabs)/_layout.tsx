@@ -18,32 +18,22 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Accueil',
+          title: 'Commandes',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'pie-chart' : 'pie-chart-outline'} color={color} />
+            <TabBarIcon name={focused ? 'newspaper' : 'newspaper-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="dispatch"
         options={{
-          title: 'Dispatch',
+          title: 'Livraisons',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'business' : 'business-outline'} color={color} />
+            <TabBarIcon name={focused ? 'rocket' : 'rocket-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
-        name="entretien"
-        options={{
-          title: 'Entretien',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'construct' : 'construct-outline'} color={color} />
-          ),
-        }}
-      />
-
-            <Tabs.Screen
         name="map"
         options={{
           title: 'Carte',
