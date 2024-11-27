@@ -9,7 +9,7 @@ export default function ScanButton() {
   const isPermissionGranted = Boolean(permission?.granted);
 
   return (
-      <View style={{ gap: 20 }}>
+      <View style={s.buttonStyle}>
         {/* <Pressable onPress={requestPermission}>
           <Text style={styles.buttonStyle}>Request Permissions</Text>
         </Pressable> */}
@@ -17,7 +17,7 @@ export default function ScanButton() {
           <Pressable disabled={!isPermissionGranted}>
             <Text
               style={[
-                styles.buttonStyle,
+                s.buttonStyle,
                 { opacity: !isPermissionGranted ? 0.5 : 1 },
               ]}
             >
@@ -29,7 +29,7 @@ export default function ScanButton() {
   );
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
@@ -45,5 +45,6 @@ const styles = StyleSheet.create({
     color: "#0E7AFE",
     fontSize: 20,
     textAlign: "center",
+    gap: 20
   },
 });

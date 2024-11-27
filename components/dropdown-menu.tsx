@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Box from './models/box';
 import Client from './models/client';
@@ -23,11 +23,16 @@ export const PickerDropdown = ({ boxProp }: PickerDropdownProps) => {
         onValueChange={(itemValue) => setSelectedValue(itemValue)}
         style={styles.picker}
       >
+        <Picker.Item key="placeholder" label="Select a location" value="" />
+        
         {options.map((option, index) => (
           <Picker.Item key={index} label={option.name} value={option.name} />
         ))}
       </Picker>
       <Text>Selected: {selectedValue}</Text>
+      <Pressable
+      
+      ></Pressable>
     </View>
   );
 };

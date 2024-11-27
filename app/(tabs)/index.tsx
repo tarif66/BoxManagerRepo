@@ -6,7 +6,7 @@ import ScanButton from '../scan-button';
 export default function HomeScreen() {
   return (
     <View style={s.container}>
-        <ScanButton/>
+
     </View>
   );
 }
