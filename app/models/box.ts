@@ -1,18 +1,14 @@
 import Location from './location';
-import Client from './client';
 
 export default class Box {
     id: number;
-    client: Client;
-    location: Location;
+    location: number;
 
     constructor(
     id: number,
-    client: Client,
-    location: Location,
+    location: number,
     ) {
     this.id = id;
-    this.client = client;
     this.location = location;
     }
 }

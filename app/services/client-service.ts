@@ -1,20 +1,45 @@
 import { CLIENTS } from "@/app/models/mock-clients";
 import Client from "@/app/models/client";
+import BoxService from "./box-service";
 
 
-export default class CleintService {
+export default class ClientService {
 
   static clients:Client[] = CLIENTS;
 
-  static getClients(): Promise<Client[]> {
-    return new Promise<Client[]>(resolve => {
-      resolve(this.clients);
+
+  private static async updateClientsWithBoxCounts(clients: Client[]): Promise<Client[]> {
+    const boxes = await BoxService.getBoxes();
+
+    clients.forEach((client) => {
+        client.locations.forEach((clientLocation) => {
+            boxes.forEach((box) => {
+              if(clientLocation.id === box.location){
+                clientLocation.numberOfBoxes++;
+              }
+            });
+        });
     });
+
+    return clients;
+  }
+ 
+
+
+
+
+  static async getClients(): Promise<Client[]> {
+    const updatedClients = await this.updateClientsWithBoxCounts(this.clients);
+    return updatedClients;
   }
 
-  static getClient(id: number): Promise<Client|null> {
-    return new Promise(resolve => {    
-      resolve(this.clients.find(client => id === client.id) || null);
-    }); 
+  static async getClient(id: number): Promise<Client | null> {
+    const updatedClients = await this.updateClientsWithBoxCounts(this.clients);
+    return updatedClients.find((client) => client.id === id) || null;
   }
 }
+
+
+
+
+
