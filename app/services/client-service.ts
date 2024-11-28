@@ -14,7 +14,7 @@ export default class ClientService {
     clients.forEach((client) => {
         client.locations.forEach((clientLocation) => {
             boxes.forEach((box) => {
-              if(clientLocation.id === box.location){
+              if(clientLocation.name === box.location){
                 clientLocation.numberOfBoxes++;
               }
             });

@@ -2,11 +2,11 @@ import Location from './location';
 
 export default class Box {
     id: number;
-    location: number;
+    location: string;
 
     constructor(
     id: number,
-    location: number,
+    location: string,
     ) {
     this.id = id;
     this.location = location;
