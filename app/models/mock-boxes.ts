@@ -17,5 +17,13 @@ export const BOXES: Box[] = [
     {
         id: 4,
         location: "IKEA Clermont-Ferrand"
-    }
+    },
+    {
+        id: 5,
+        location: "IKEA Marseille Vitrolles"
+    },
+    {
+        id: 6,
+        location: "IKEA Marseille Vitrolles"
+    },
 ];

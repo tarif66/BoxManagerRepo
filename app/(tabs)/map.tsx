@@ -34,7 +34,7 @@ export default function TabTwoScreen() {
             key={`${client.id}-${location.id}`}
             coordinate={{ latitude: location.latitude, longitude: location.longitude }}
             title={client.brand} 
-            description= {`${location.name}, ${location.numberOfBoxes} caisses`} 
+            description= {`${location.name}, ${location.numberOfBoxes/2} caisses`} 
             pinColor={
               location.numberOfBoxes>0 ? 
                 "green" 
