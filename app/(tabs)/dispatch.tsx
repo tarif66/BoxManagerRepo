@@ -41,7 +41,7 @@ const transactions = [
 ];
 
 export default function DispatchScreen() {
-  const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(true);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -71,13 +71,13 @@ export default function DispatchScreen() {
 
   return (
     <><ScrollView style={s.container}>
-        <TransactionCard
+        {/* <TransactionCard
           key={1}
           boxes={transactions[0].boxes}
           client={transactions[0].client}
           date={transactions[0].date} 
           openModal={openModal1}
-          />
+          /> */}
         {/* <GetNewBoxesCard
           key={1}
           boxes={transactions[1].boxes}
@@ -116,22 +116,28 @@ export default function DispatchScreen() {
       >
         <View style={s.modalBackground}>
           <View style={s.modalView}>
-            {loading ? (
+            {/* {loading ? (
               <>
                 <Text style={s.modalText}>En attente de validation</Text>
                 <ActivityIndicator size="large" color="#829E91" />
               </>
-            ) : (
+            ) : ( */}
               <>
-                <Text style={s.modalText}>Transfert accepté!</Text>
+                <Text style={s.modalText}>Acceptez-vous le transfert de 5 caisses ?</Text>
                 <Ionicons name="checkmark-outline" size={32} color="green" />
               </>
-            )}
+            {/* )} */}
             <Pressable
               style={[s.button, s.buttonClose]}
               onPress={closeModal1}
             >
-              <Text style={s.textStyle}>Fermer</Text>
+              <Text style={s.textStyle}>Accepter</Text>
+            </Pressable>
+            <Pressable
+              style={[s.button, s.buttonCancel]}
+              onPress={handleCancel}
+            >
+              <Text style={s.textStyle}>Cancel</Text>
             </Pressable>
           </View>
         </View>
