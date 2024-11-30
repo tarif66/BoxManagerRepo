@@ -1,7 +1,8 @@
 // screens/DispatchScreen.tsx
-import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView, StyleSheet, Pressable, Modal, TextInput, Text, ActivityIndicator } from 'react-native';
 import TransactionCard from '@/components/transaction-card';
+import { Ionicons } from '@expo/vector-icons';
 
 const transactions = [
   {
@@ -88,23 +89,130 @@ const transactions = [
 ];
 
 export default function DispatchScreen() {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  const openModal = () => {
+    setModalVisible(true);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 5000); // 10 seconds
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+  };
+
   return (
-    <ScrollView style={styles.container}>
+    <><ScrollView style={s.container}>
       {transactions.map((transaction, index) => (
         <TransactionCard
           key={index}
           boxes={transaction.boxes}
           client={transaction.client}
-          date={transaction.date}
-        />
+          date={transaction.date} 
+          openModal={openModal}
+          />
       ))}
-    </ScrollView>
+    </ScrollView><Pressable style={s.floatingButton} onPress={() => { } }>
+        <Ionicons name="add" size={24} color="white" />
+      </Pressable>
+      <Modal
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}
+      >
+        <View style={s.modalBackground}>
+          <View style={s.modalView}>
+            {loading ? (
+              <>
+                <Text style={s.modalText}>En attente de validation</Text>
+                <ActivityIndicator size="large" color="#829E91" />
+              </>
+            ) : (
+              <>
+                <Text style={s.modalText}>Transfert accepté!</Text>
+                <Ionicons name="checkmark-outline" size={32} color="green" />
+              </>
+            )}
+            <Pressable
+              style={[s.button, s.buttonClose]}
+              onPress={closeModal}
+            >
+              <Text style={s.textStyle}>Fermer</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      
+      </>
   );
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 10,
+  },
+  buttonOpen: {
+    backgroundColor: '#829E91',
+  },
+  buttonClose: {
+    backgroundColor: '#829E91',
+  },
+  buttonCancel: {
+    backgroundColor: 'lightgray',
+  },
   container: {
     flex: 1,
     padding: 16,
   },
-});
+  floatingButton: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: '#829E91',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalBackground: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    },
+  });

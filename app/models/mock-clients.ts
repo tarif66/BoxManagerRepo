@@ -80,4 +80,12 @@ export const CLIENTS: Client[] = [
             { id: 20, name: "Monoprix Rouen Centre", latitude: 49.4432, longitude: 1.0993, numberOfBoxes: 0 }
          ],
     },
+    {
+        id: 4,
+        brand: "Monoprix",
+        locations: [
+            { id: 1, name: "Monoprix Paris Champs-Elysées", latitude: 48.8701, longitude: 2.3044, numberOfBoxes: 0 },
+        ],
+    },
+
 ]

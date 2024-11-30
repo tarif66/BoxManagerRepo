@@ -22,7 +22,7 @@ export default function TabLayout() {
         options={{
           title: 'Inventaire',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color={color} />
+            <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color='#829E91' />
           ),
         }}
       />
@@ -31,7 +31,7 @@ export default function TabLayout() {
         options={{
           title: 'Echanges',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'swap-vertical' : 'swap-vertical-outline'} color={color} />
+            <TabBarIcon name={focused ? 'swap-vertical' : 'swap-vertical-outline'} color='#829E91'/>
           ),
         }}
       />
@@ -40,7 +40,7 @@ export default function TabLayout() {
         options={{
           title: 'Caisses disponibles',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'map' : 'map-outline'} color={color} />
+            <TabBarIcon name={focused ? 'map' : 'map-outline'} color='#829E91' />
           ),
         }}
       />

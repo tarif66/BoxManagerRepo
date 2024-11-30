@@ -14,32 +14,60 @@ type TransactionCardProps = {
       name: string;
     };
   };
+  openModal: () => void;
   date: string;
 };
 
-const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date }) => {
+const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, openModal }) => {
   return (
-    <View style={styles.card}>
-      <Text style={styles.boxes}>{boxes} boxes</Text>
-      <Text style={styles.brand}>{client.brand}</Text>
-      <Text style={styles.location}>{client.location.name}</Text>
-      <Text style={styles.date}>{date}</Text>
-      <Pressable style={styles.pinIcon}>
-        <Link
-          href={{
-            pathname: '/(tabs)/map',
-            params: { latitude: client.location.latitude, longitude: client.location.longitude },
-          }}
-          asChild
-        >
-          <Ionicons name="location-outline" size={24} color="blue" />
-        </Link>
+    <View style={s.card}>
+      <View>  
+        <Text style={s.boxes}>{boxes} boxes</Text>
+        <Text style={s.brand}>{client.brand}</Text>
+        <Text style={s.location}>{client.location.name}</Text>
+        <Text style={s.date}>{date}</Text>
+        <Pressable style={s.pinIcon}>
+          <Link
+            href={{
+              pathname: '/(tabs)/map',
+              params: { latitude: client.location.latitude, longitude: client.location.longitude },
+            }}
+            asChild
+          >
+            <Ionicons name="location-outline" size={24} color="#829E91" />
+          </Link>
+        </Pressable>
+      </View>
+      <Pressable style={[s.button, s.buttonClose]}onPress={openModal}>
+        <Text style={s.textStyle}>Caisses déposées</Text>
       </Pressable>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+    marginTop: 10,
+    width: 200,
+    
+  },
+  buttonOpen: {
+    backgroundColor: '#829E91',
+  },
+  buttonClose: {
+    backgroundColor: '#829E91',
+  },
+  buttonCancel: {
+    backgroundColor: 'lightgray',
+  },
   card: {
     padding: 16,
     margin: 8,
@@ -69,6 +97,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     top: 16,
+    color: '#829E91',
   },
 });
 
