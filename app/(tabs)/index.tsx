@@ -44,7 +44,7 @@ export default function HomeScreen() {
       </View>
       <View style={s.card}>
         <View style={s.icon}>
-          <Ionicons name="swap-vertical-outline" size={32} color="#829E91" />
+          <Ionicons name="arrow-up-outline" size={32} color="#829E91" />
         </View>
         <View style={s.description}>        
           <View>

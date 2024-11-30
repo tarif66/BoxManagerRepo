@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { View, ScrollView, StyleSheet, Pressable, Modal, TextInput, Text, ActivityIndicator } from 'react-native';
 import TransactionCard from '@/components/transaction-card';
 import { Ionicons } from '@expo/vector-icons';
+import GetNewBoxesCard from '@/components/getNewBox-card';
 
 const transactions = [
   {
@@ -106,15 +107,41 @@ export default function DispatchScreen() {
 
   return (
     <><ScrollView style={s.container}>
-      {transactions.map((transaction, index) => (
         <TransactionCard
-          key={index}
-          boxes={transaction.boxes}
-          client={transaction.client}
-          date={transaction.date} 
+          key={1}
+          boxes={transactions[2].boxes}
+          client={transactions[2].client}
+          date={transactions[2].date} 
           openModal={openModal}
           />
-      ))}
+        <GetNewBoxesCard
+          key={1}
+          boxes={transactions[2].boxes}
+          client={transactions[2].client}
+          date={transactions[2].date} 
+          openModal={openModal}
+          />
+        <GetNewBoxesCard
+          key={1}
+          boxes={transactions[2].boxes}
+          client={transactions[2].client}
+          date={transactions[2].date} 
+          openModal={openModal}
+        />
+        <TransactionCard
+          key={1}
+          boxes={transactions[2].boxes}
+          client={transactions[2].client}
+          date={transactions[2].date} 
+          openModal={openModal}
+          />
+        <TransactionCard
+          key={1}
+          boxes={transactions[2].boxes}
+          client={transactions[2].client}
+          date={transactions[2].date} 
+          openModal={openModal}
+          />
     </ScrollView><Pressable style={s.floatingButton} onPress={() => { } }>
         <Ionicons name="add" size={24} color="white" />
       </Pressable>

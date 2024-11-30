@@ -1,10 +1,9 @@
-// components/TransactionCard.tsx
 import React from 'react';
 import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Link } from 'expo-router';
 
-type TransactionCardProps = {
+type GetNewBoxesCardProps = {
   boxes: number;
   client: {
     brand: string;
@@ -18,13 +17,13 @@ type TransactionCardProps = {
   date: string;
 };
 
-const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, openModal }) => {
+const GetNewBoxesCard: React.FC<GetNewBoxesCardProps> = ({ boxes, client, date, openModal }) => {
   return (
     <View style={s.card}>
       <View>  
         <View style={s.arrow} >
-            <Ionicons name="arrow-down-outline" size={32} color="#829E91" style={s.arrowIcon} />
-          <Text style={s.boxes}>{boxes} caisses transmises à...</Text>
+            <Ionicons name="arrow-up-outline" size={32} color="#829E91" style={s.arrowIcon} />
+          <Text style={s.boxes}>{boxes} caisses récupérées de...</Text>
 
         </View>
         <Text style={s.brand}>{client.brand}</Text>
@@ -42,11 +41,11 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, 
           </Link>
         </Pressable>
       </View >
-      <View style={s.buttonContainer}>
+      {/* <View style={s.buttonContainer}>
         <Pressable style={[s.button, s.buttonClose]}onPress={openModal}>
             <Text style={s.textStyle}>Caisses déposées</Text>
         </Pressable>
-      </View>
+      </View> */}
 
     </View>
   );
@@ -117,4 +116,4 @@ const s = StyleSheet.create({
   },
 });
 
-export default TransactionCard;
+export default GetNewBoxesCard;
