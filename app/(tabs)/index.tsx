@@ -31,14 +31,16 @@ export default function HomeScreen() {
   return (
     <View style={s.container}>
       <Image source={require('../../assets/images/oenoco.png')} style={s.headerImage} />
-      <View style={s.card}>
-        <View style={s.icon}>
-          <Ionicons name="cube-outline" size={32} color="#829E91" />
+      <View style={s.dataviz}>
+        <View style={s.iconFat}>
+          <Ionicons name="cube-outline" size={48} color="#829E91" />
         </View>
         <View style={s.description}>        
           <View>
-            <Text>Nombre de caisses</Text>
-            <Text style={s.number}>{USERS[0].numberOfBoxes}</Text>
+            <Text style={s.numberFat}>{USERS[0].numberOfBoxes}</Text>
+          </View>
+          <View>
+            <Text style={s.location}>{USERS[0].location}</Text>
           </View>
         </View>
       </View>
@@ -56,9 +58,9 @@ export default function HomeScreen() {
               </Pressable>
             </View>
           </View>
-          <View>
+          <View >
             <Pressable style={[s.button, s.buttonClose]}>
-              <Text style={s.textStyle}>Donner des caisses</Text>
+              <Text style={s.textStyle}>Donner</Text>
             </Pressable>
           </View>
         </View>
@@ -73,7 +75,7 @@ export default function HomeScreen() {
       >
         <View style={s.modalBackground}>
           <View style={s.modalView}>
-            <Text style={s.modalText}>Edit Number of Boxes</Text>
+            <Text style={s.modalText}>Combien de caisses donnez-vous ?</Text>
             <TextInput
               style={s.input}
               value={tempNumberOfBoxesToGive.toString()}
@@ -100,6 +102,13 @@ export default function HomeScreen() {
 }
 
 const s = StyleSheet.create({
+  iconFat: {
+  },
+  dataviz: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   container: {
     paddingTop: 32,
     alignItems: 'center',
@@ -125,6 +134,7 @@ const s = StyleSheet.create({
   },
   buttonClose: {
     backgroundColor: '#829E91',
+    width: 100,
   },
   buttonCancel: {
     backgroundColor: 'lightgray',
@@ -137,6 +147,10 @@ const s = StyleSheet.create({
   number: {
     fontSize: 24,
     fontWeight: 'bold',
+  },
+  numberFat: {
+    fontSize: 100,
+    fontWeight: 'thin'
   },
   description: {
     gap: 16,
@@ -186,5 +200,13 @@ const s = StyleSheet.create({
     paddingHorizontal: 10,
     width: 100,
     textAlign: 'center',
+  },
+  brand: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  location: {
+    fontSize: 14,
+    color: 'gray',
   },
 });

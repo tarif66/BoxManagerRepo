@@ -49,7 +49,7 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, 
             }}
             asChild
           >
-            <Ionicons name="location-outline" size={32} color="#829E91" />
+            <Ionicons name="location-outline" size={32} color="#CA6E52" />
           </Link>
         </Pressable>
 
