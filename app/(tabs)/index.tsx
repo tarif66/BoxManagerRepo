@@ -65,7 +65,6 @@ export default function HomeScreen() {
       </View>
 
       <Modal
-        animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -185,7 +184,7 @@ const s = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 15,
     paddingHorizontal: 10,
-    width: '100%',
+    width: 100,
     textAlign: 'center',
   },
 });

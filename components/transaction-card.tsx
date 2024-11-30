@@ -21,16 +21,27 @@ type TransactionCardProps = {
 const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, openModal }) => {
   return (
     <View style={s.card}>
+      <View style={s.arrow}>
+    
+      <Ionicons name="arrow-down-outline" size={32} color="#829E91" style={s.arrowIcon} />
+        </View>  
       <View>  
-        <View style={s.arrow} >
-            <Ionicons name="arrow-down-outline" size={32} color="#829E91" style={s.arrowIcon} />
-          <Text style={s.boxes}>{boxes} caisses transmises à...</Text>
+        <View >
+          <Text style={s.boxes}>- {boxes} caisses</Text>
 
         </View>
+        <Text>transmises à</Text>
         <Text style={s.brand}>{client.brand}</Text>
         <Text style={s.location}>{client.location.name}</Text>
         <Text style={s.date}>{date}</Text>
-        <Pressable style={s.pinIcon}>
+        
+        <View style={s.buttonContainer}>
+        <Pressable style={[s.button, s.buttonClose]}onPress={openModal}>
+            <Text style={s.textStyle}>Confirmer le dépôt</Text>
+        </Pressable>
+      </View>
+      </View >
+      <Pressable style={s.pinIcon}>
           <Link
             href={{
               pathname: '/(tabs)/map',
@@ -41,12 +52,6 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, 
             <Ionicons name="location-outline" size={32} color="#829E91" />
           </Link>
         </Pressable>
-      </View >
-      <View style={s.buttonContainer}>
-        <Pressable style={[s.button, s.buttonClose]}onPress={openModal}>
-            <Text style={s.textStyle}>Caisses déposées</Text>
-        </Pressable>
-      </View>
 
     </View>
   );
@@ -76,6 +81,7 @@ const s = StyleSheet.create({
     backgroundColor: 'lightgray',
   },
   card: {
+    flexDirection: 'row',
     padding: 16,
     margin: 8,
     backgroundColor: 'white',
@@ -91,6 +97,7 @@ const s = StyleSheet.create({
   },
   brand: {
     fontSize: 16,
+    fontWeight: 'bold',
   },
   location: {
     fontSize: 14,
@@ -103,17 +110,18 @@ const s = StyleSheet.create({
   pinIcon: {
     position: 'absolute',
     right: 16,
-    top: 48,
+    top: 16,
     color: '#829E91',
   },
   arrow: {
-    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingRight: 16,
   },
   arrowIcon: {
     width: 32,
   },
   buttonContainer: {
-    alignItems: 'center',
+    alignItems: 'baseline',
   },
 });
 

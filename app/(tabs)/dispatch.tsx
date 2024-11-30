@@ -37,72 +37,36 @@ const transactions = [
       location: { latitude: 34.0522, longitude: -118.2437, name: 'Los Angeles' },
     },
     date: '2023-10-04',
-  },
-  {
-    boxes: 20,
-    client: {
-      brand: 'Brand E',
-      location: { latitude: 35.6895, longitude: 139.6917, name: 'Tokyo' },
-    },
-    date: '2023-10-05',
-  },
-  {
-    boxes: -12,
-    client: {
-      brand: 'Brand F',
-      location: { latitude: 51.5074, longitude: -0.1278, name: 'London' },
-    },
-    date: '2023-10-06',
-  },
-  {
-    boxes: 7,
-    client: {
-      brand: 'Brand G',
-      location: { latitude: 55.7558, longitude: 37.6173, name: 'Moscow' },
-    },
-    date: '2023-10-07',
-  },
-  {
-    boxes: -3,
-    client: {
-      brand: 'Brand H',
-      location: { latitude: 39.9042, longitude: 116.4074, name: 'Beijing' },
-    },
-    date: '2023-10-08',
-  },
-  {
-    boxes: 25,
-    client: {
-      brand: 'Brand I',
-      location: { latitude: -33.8688, longitude: 151.2093, name: 'Sydney' },
-    },
-    date: '2023-10-09',
-  },
-  {
-    boxes: -10,
-    client: {
-      brand: 'Brand J',
-      location: { latitude: 37.7749, longitude: -122.4194, name: 'San Francisco' },
-    },
-    date: '2023-10-10',
-  },
-  // Add more transactions as needed
+  }
 ];
 
 export default function DispatchScreen() {
-  const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
+  const [modalVisible2, setModalVisible2] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const openModal = () => {
-    setModalVisible(true);
+  const handleCancel = () => {
+    setModalVisible2(false);
+  };
+
+  const openModal1 = () => {
+    setModalVisible1(true);
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
     }, 5000); // 10 seconds
   };
 
-  const closeModal = () => {
-    setModalVisible(false);
+  const closeModal1 = () => {
+    setModalVisible1(false);
+  };
+
+  const openModal2 = () => {
+    setModalVisible2(true);
+  };
+
+  const closeModal2 = () => {
+    setModalVisible2(false);
   };
 
   return (
@@ -112,43 +76,43 @@ export default function DispatchScreen() {
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
-          openModal={openModal}
+          openModal={openModal1}
           />
         <GetNewBoxesCard
           key={1}
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
-          openModal={openModal}
+          openModal={openModal1}
           />
         <GetNewBoxesCard
           key={1}
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
-          openModal={openModal}
+          openModal={openModal1}
         />
         <TransactionCard
           key={1}
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
-          openModal={openModal}
+          openModal={openModal1}
           />
         <TransactionCard
           key={1}
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
-          openModal={openModal}
+          openModal={openModal1}
           />
-    </ScrollView><Pressable style={s.floatingButton} onPress={() => { } }>
+    </ScrollView><Pressable style={s.floatingButton}  onPress={openModal2}>
         <Ionicons name="add" size={24} color="white" />
       </Pressable>
       <Modal
         transparent={true}
-        visible={modalVisible}
-        onRequestClose={closeModal}
+        visible={modalVisible1}
+        onRequestClose={closeModal1}
       >
         <View style={s.modalBackground}>
           <View style={s.modalView}>
@@ -165,14 +129,42 @@ export default function DispatchScreen() {
             )}
             <Pressable
               style={[s.button, s.buttonClose]}
-              onPress={closeModal}
+              onPress={closeModal1}
             >
               <Text style={s.textStyle}>Fermer</Text>
             </Pressable>
           </View>
         </View>
       </Modal>
-      
+      <Modal
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+          setModalVisible2(!modalVisible2);
+        }}
+      >
+        <View style={s.modalBackground}>
+          <View style={s.modalView}>
+            <Text style={s.modalText}>Combien de boîtes récupérez-vous ?</Text>
+            <TextInput
+              style={s.input}
+             
+              keyboardType="numeric"
+            />
+            <Pressable
+              style={[s.button, s.buttonClose]}
+            >
+              <Text style={s.textStyle}>Save</Text>
+            </Pressable>
+            <Pressable
+              style={[s.button, s.buttonCancel]}
+              onPress={handleCancel}
+            >
+              <Text style={s.textStyle}>Cancel</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       </>
   );
 }
@@ -242,4 +234,13 @@ const s = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    width: 100,
+    textAlign: 'center',
+  },
   });
