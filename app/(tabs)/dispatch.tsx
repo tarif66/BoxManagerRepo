@@ -7,20 +7,20 @@ import GetNewBoxesCard from '@/components/getNewBox-card';
 
 const transactions = [
   {
-    boxes: 10,
+    boxes: 5,
     client: {
-      brand: 'Brand A',
-      location: { latitude: 52.5200, longitude: 13.4050, name: 'Berlin' },
+      brand: 'Domaine du Clos Michel',
+      location: { latitude: 48.6018669, longitude: 5.8520423, name: 'Toul' },
     },
-    date: '2023-10-01',
+    date: '23 novembre 2024',
   },
   {
-    boxes: -5,
+    boxes: 5,
     client: {
-      brand: 'Brand B',
-      location: { latitude: 48.8566, longitude: 2.3522, name: 'Paris' },
+      brand: 'Biocoop Reims',
+      location: { latitude: 49.2583, longitude: 4.0317, name: 'Reims' },
     },
-    date: '2023-10-02',
+    date: '12 novembre 2024',
   },
   {
     boxes: 15,
@@ -31,7 +31,7 @@ const transactions = [
     date: '2023-10-03',
   },
   {
-    boxes: -8,
+    boxes: 8,
     client: {
       brand: 'Brand D',
       location: { latitude: 34.0522, longitude: -118.2437, name: 'Los Angeles' },
@@ -73,9 +73,16 @@ export default function DispatchScreen() {
     <><ScrollView style={s.container}>
         <TransactionCard
           key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
+          boxes={transactions[0].boxes}
+          client={transactions[0].client}
+          date={transactions[0].date} 
+          openModal={openModal1}
+          />
+        {/* <GetNewBoxesCard
+          key={1}
+          boxes={transactions[1].boxes}
+          client={transactions[1].client}
+          date={transactions[1].date} 
           openModal={openModal1}
           />
         <GetNewBoxesCard
@@ -84,28 +91,21 @@ export default function DispatchScreen() {
           client={transactions[2].client}
           date={transactions[2].date} 
           openModal={openModal1}
-          />
-        <GetNewBoxesCard
+        /> */}
+        {/* <TransactionCard
           key={1}
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
           openModal={openModal1}
-        />
-        <TransactionCard
+          /> */}
+        {/* <TransactionCard
           key={1}
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
           openModal={openModal1}
-          />
-        <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          />
+          /> */}
     </ScrollView><Pressable style={s.floatingButton}  onPress={openModal2}>
         <Ionicons name="add" size={24} color="white" />
       </Pressable>

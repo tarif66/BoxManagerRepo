@@ -41,7 +41,7 @@ export default function HomeScreen() {
           <View>
             <Text style={s.numberFat}>{USERS[0].numberOfBoxes}</Text>
           </View>
-          <View style={s.pinIcon}>
+          {/* <View style={s.pinIcon}>
             <Pressable >
               <Link
                 href={{
@@ -54,7 +54,7 @@ export default function HomeScreen() {
               </Link>
             </Pressable>
             <Text style={s.location}>{USERS[0].location}</Text>
-          </View>
+          </View> */}
         </View>
       </View>
       <View style={s.card}>
@@ -225,6 +225,6 @@ const s = StyleSheet.create({
   pinIcon: {
     flexDirection: 'row',
     gap: 8,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
 });

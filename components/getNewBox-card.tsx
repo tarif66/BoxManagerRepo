@@ -45,7 +45,7 @@ const GetNewBoxesCard: React.FC<GetNewBoxesCardProps> = ({ boxes, client, date, 
             <Link
               href={{
                 pathname: '/(tabs)/map',
-                params: { latitude: client.location.latitude, longitude: client.location.longitude, longitudeDelta: 0.2, latitudeDelta: 0.2  },
+                params: { latitude: client.location.latitude, longitude: client.location.longitude, longitudeDelta: 0.05, latitudeDelta: 0.05  },
               }}
               asChild
             >
