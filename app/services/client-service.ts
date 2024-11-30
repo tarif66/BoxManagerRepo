@@ -26,8 +26,6 @@ export default class ClientService {
  
 
 
-
-
   static async getClients(): Promise<Client[]> {
     const updatedClients = await this.updateClientsWithBoxCounts(this.clients);
     return updatedClients;

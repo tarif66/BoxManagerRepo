@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, View, Text, Image, Modal, TextInput } from 'reac
 import ClientService from '../services/client-service';
 import Client from '../models/client';
 import { USERS } from '../models/mock-users';
+import { Link } from 'expo-router';
 
 export default function HomeScreen() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -20,6 +21,7 @@ export default function HomeScreen() {
   const handleSave = () => {
     USERS[0].numberOfBoxesToGive = tempNumberOfBoxesToGive;
     setNumberOfBoxesToGive(tempNumberOfBoxesToGive);
+    clients[0].locations[0].numberOfBoxes = tempNumberOfBoxesToGive;
     setModalVisible(false);
   };
 
@@ -39,7 +41,18 @@ export default function HomeScreen() {
           <View>
             <Text style={s.numberFat}>{USERS[0].numberOfBoxes}</Text>
           </View>
-          <View>
+          <View style={s.pinIcon}>
+            <Pressable >
+              <Link
+                href={{
+                  pathname: '/(tabs)/map',
+                  params: { latitude: USERS[0].latitude, longitude: USERS[0].longitude, longitudeDelta: 0.05, latitudeDelta: 0.05  },
+                }}
+                asChild
+              >
+                <Ionicons name="location-outline" size={32} color="#CA6E52" />
+              </Link>
+            </Pressable>
             <Text style={s.location}>{USERS[0].location}</Text>
           </View>
         </View>
@@ -208,5 +221,10 @@ const s = StyleSheet.create({
   location: {
     fontSize: 14,
     color: 'gray',
+  },
+  pinIcon: {
+    flexDirection: 'row',
+    gap: 8,
+    alignItems: 'flex-start',
   },
 });

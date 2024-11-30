@@ -11,6 +11,7 @@ export default function TabTwoScreen() {
   const [clients, setClients] = useState<Client[]>([]);
 
   const searchParams = useSearchParams();
+
   const [region, setRegion] = useState({
     latitude: 47.3712,
     longitude: 2.0,
@@ -19,13 +20,15 @@ export default function TabTwoScreen() {
   });
 
   useEffect(() => {
-    const latitude = parseFloat(searchParams.get('latitude') || '49.2441');
-    const longitude = parseFloat(searchParams.get('longitude') || '4.0408');
+    const latitude = parseFloat(searchParams.get('latitude') || '47.3712');
+    const longitude = parseFloat(searchParams.get('longitude') || '2');
+    const latitudeDelta = parseFloat(searchParams.get('latitudeDelta') || '14');
+    const longitudeDelta = parseFloat(searchParams.get('longitudeDelta') || '14');
     setRegion({
       latitude,
       longitude,
-      latitudeDelta: 14,
-      longitudeDelta: 14,
+      latitudeDelta,
+      longitudeDelta,
     });
   }, [searchParams]);
 
@@ -50,14 +53,14 @@ export default function TabTwoScreen() {
               key={`${client.id}-${location.id}`}
               coordinate={{ latitude: location.latitude, longitude: location.longitude }}
               title={client.brand} 
-              description= {`${location.name}, ${location.numberOfBoxes/2} caisses disponibles`} 
+              description= {`${location.name}, ${location.numberOfBoxes} caisses disponibles`} 
               pinColor={
                 location.numberOfBoxes>0 ? 
                   "green" 
                   : "yellow" 
                 }
             >
-              <CustomMarker number={location.numberOfBoxes/2} />
+              <CustomMarker number={location.numberOfBoxes} />
             </Marker>
             )
 
