@@ -248,5 +248,32 @@ export const CLIENTS: Client[] = [
         },
     
 ]
+},
+{
+    id: 10,
+    brand: "Biocoop Saint-Dizier",
+    locations: [
+        {
+            id: 1,
+            name: "Epicerie Bio",
+            latitude: 48.650989,
+            longitude: 4.961442,
+            numberOfBoxes: 8
+        },
+]
+},
+{
+    id: 11,
+    brand: "Le Duc du bar",
+    locations: [
+        {
+            id: 1,
+            name: "Brasserie",
+            latitude: 48.76516,
+            longitude: 5.16,
+            numberOfBoxes: 2
+        },
+    
+]
 }
 ]

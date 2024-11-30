@@ -7,28 +7,28 @@ import GetNewBoxesCard from '@/components/getNewBox-card';
 
 const transactions = [
   {
-    boxes: 5,
+    boxes: 2,
     client: {
-      brand: 'Domaine du Clos Michel',
-      location: { latitude: 48.6018669, longitude: 5.8520423, name: 'Toul' },
+      brand: 'Le Duc du bar',
+      location: { latitude: 48.76516, longitude: 5.16, name: 'Bar-le-Duc' },
     },
     date: '23 novembre 2024',
   },
   {
-    boxes: 5,
+    boxes: 8,
     client: {
-      brand: 'Biocoop Reims',
-      location: { latitude: 49.2583, longitude: 4.0317, name: 'Reims' },
+      brand: 'Biocoop Saint-Dizier',
+      location: { latitude: 48.650989, longitude: 4.961442, name: 'Saint-Dizier' },
     },
-    date: '12 novembre 2024',
+    date: '23 novembre 2024',
   },
   {
-    boxes: 15,
+    boxes: 2,
     client: {
-      brand: 'Brand C',
-      location: { latitude: 40.7128, longitude: -74.0060, name: 'New York' },
+      brand: 'Le Duc du bar',
+      location: { latitude: 48.76516, longitude: 5.16, name: 'Bar-le-Duc' },
     },
-    date: '2023-10-03',
+    date: '23 novembre 2024',
   },
   {
     boxes: 8,
@@ -71,14 +71,7 @@ export default function DispatchScreen() {
 
   return (
     <><ScrollView style={s.container}>
-        <TransactionCard
-          key={1}
-          boxes={transactions[0].boxes}
-          client={transactions[0].client}
-          date={transactions[0].date} 
-          openModal={openModal1}
-          />
-        {/* <GetNewBoxesCard
+        <GetNewBoxesCard
           key={1}
           boxes={transactions[1].boxes}
           client={transactions[1].client}
@@ -90,8 +83,15 @@ export default function DispatchScreen() {
           boxes={transactions[2].boxes}
           client={transactions[2].client}
           date={transactions[2].date} 
+          openModal={openModal1} />
+
+        <TransactionCard
+          key={1}
+          boxes={transactions[0].boxes}
+          client={transactions[0].client}
+          date={transactions[0].date} 
           openModal={openModal1}
-        /> */}
+        /> 
         {/* <TransactionCard
           key={1}
           boxes={transactions[2].boxes}
