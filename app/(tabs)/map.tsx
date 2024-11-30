@@ -9,29 +9,35 @@ import { useSearchParams } from 'expo-router/build/hooks';
 
 export default function TabTwoScreen() {
   const [clients, setClients] = useState<Client[]>([]);
-  const searchParams = useSearchParams();
-  const latitude = searchParams.get('latitude');
-  const longitude = searchParams.get('longitude');
 
+  const searchParams = useSearchParams();
+  const [region, setRegion] = useState({
+    latitude: 47.3712,
+    longitude: 2.0,
+    latitudeDelta: 14,
+    longitudeDelta: 14,
+  });
+
+  useEffect(() => {
+    const latitude = parseFloat(searchParams.get('latitude') || '49.2441');
+    const longitude = parseFloat(searchParams.get('longitude') || '4.0408');
+    setRegion({
+      latitude,
+      longitude,
+      latitudeDelta: 14,
+      longitudeDelta: 14,
+    });
+  }, [searchParams]);
 
   useEffect(() => {
     ClientService.getClients().then(clients => setClients(clients));
   }, []);
 
-  const initialRegion = {
-    latitude: latitude ? parseFloat(latitude) : 49.2441,
-    longitude: longitude ? parseFloat(longitude) : 4.0408,
-    latitudeDelta: 14,
-    longitudeDelta: 14,
-  };
-
-
-
   return (
     <View style={s.container}>
       <MapView 
         style={s.map} 
-        initialRegion={initialRegion}
+        region={region}
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
