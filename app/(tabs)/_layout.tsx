@@ -6,6 +6,7 @@ import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { NavigationContainer } from '@react-navigation/native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { StyleSheet } from 'react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -19,25 +20,25 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Commandes',
+          title: 'Inventaire',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'newspaper' : 'newspaper-outline'} color={color} />
+            <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="dispatch"
         options={{
-          title: 'Livraisons',
+          title: 'Echanges',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'rocket' : 'rocket-outline'} color={color} />
+            <TabBarIcon name={focused ? 'swap-vertical' : 'swap-vertical-outline'} color={color} />
           ),
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
-          title: 'Carte',
+          title: 'Caisses disponibles',
           tabBarIcon: ({ color, focused }) => (
             <TabBarIcon name={focused ? 'map' : 'map-outline'} color={color} />
           ),

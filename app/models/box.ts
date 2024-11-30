@@ -12,3 +12,4 @@ export default class Box {
     this.location = location;
     }
 }
+    
