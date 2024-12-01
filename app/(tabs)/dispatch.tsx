@@ -25,8 +25,8 @@ const transactions = [
   {
     boxes: 2,
     client: {
-      brand: 'Le Duc du bar',
-      location: { latitude: 48.76516, longitude: 5.16, name: 'Bar-le-Duc' },
+      brand: 'Domaine du Clos Michel',
+      location: { latitude: 48.76516, longitude: 5.16, name: 'Toul' },
     },
     date: '23 novembre 2024',
   },
@@ -73,23 +73,23 @@ export default function DispatchScreen() {
     <><ScrollView style={s.container}>
         <GetNewBoxesCard
           key={1}
-          boxes={transactions[1].boxes}
-          client={transactions[1].client}
-          date={transactions[1].date} 
+          boxes={transactions[0].boxes}
+          client={transactions[0].client}
+          date={transactions[0].date} 
           openModal={openModal1}
           />
         <GetNewBoxesCard
           key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
+          boxes={transactions[1].boxes}
+          client={transactions[1].client}
+          date={transactions[1].date} 
           openModal={openModal1} />
 
         <TransactionCard
           key={1}
-          boxes={transactions[0].boxes}
-          client={transactions[0].client}
-          date={transactions[0].date} 
+          boxes={transactions[2].boxes}
+          client={transactions[2].client}
+          date={transactions[2].date} 
           openModal={openModal1}
         /> 
         {/* <TransactionCard
