@@ -36,9 +36,9 @@ const TransactionCard: React.FC<TransactionCardProps> = ({ boxes, client, date, 
         <Text style={s.date}>{date}</Text>
         
         <View style={s.buttonContainer}>
-        {/* <Pressable style={[s.button, s.buttonClose]}onPress={openModal}>
+        <Pressable style={[s.button, s.buttonClose]}onPress={openModal}>
             <Text style={s.textStyle}>Confirmer le dépôt</Text>
-        </Pressable> */}
+        </Pressable> 
       </View>
       </View >
       <Pressable style={s.pinIcon}>

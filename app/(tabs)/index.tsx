@@ -1,10 +1,91 @@
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Pressable, Image, Modal, TextInput, Dimensions } from 'react-native';
+import Svg, { Circle, Text as SvgText } from 'react-native-svg';
+import Animated, { interpolate, useAnimatedProps, useSharedValue, withTiming } from 'react-native-reanimated';
 import { Ionicons } from '@expo/vector-icons';
-import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet, View, Text, Image, Modal, TextInput } from 'react-native';
 import ClientService from '../services/client-service';
 import Client from '../models/client';
 import { USERS } from '../models/mock-users';
 import { Link } from 'expo-router';
+
+
+const PieChartSegment = ({ center, radius, strokeWidth, color, circumference, angle, percent }: { center: number, radius: number, strokeWidth: number, color: string, circumference: number, angle: number, percent: number }) => {
+  const strokeDashoffset = circumference * (1 - percent);
+  const rotateAngle = angle;
+
+  return (
+    <Circle
+      cx={center}
+      cy={center}
+      r={radius}
+      strokeWidth={strokeWidth}
+      stroke={color}
+      strokeDasharray={circumference}
+      strokeDashoffset={strokeDashoffset}
+      // transform={[
+      //   { translateX: center },
+      //   { translateY: center },
+      //   { rotate: `${rotateAngle}deg` },
+      //   { translateX: -center },
+      //   { translateY: -center },
+      // ]}
+    />
+  );
+};
+
+const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: number, strokeWidth?: number, data: { color: string, percent: number }[], centerText: string }) => {
+  const [startAngles, setStartAngles] = useState<number[]>([]);
+  const center = size / 2;
+  const radius = (size - strokeWidth) / 2;
+  const circumference = 2 * Math.PI * radius;
+
+  useEffect(() => {
+    let angle = 0;
+    const angles: number[] | ((prevState: never[]) => never[]) = [];
+    data.forEach(item => {
+      angles.push(angle);
+      angle += item.percent * 360;
+    });
+
+    setStartAngles(angles);
+  }, [data]);
+
+  return (
+    <View style={[{ width: size, height: size }]}>
+      <Svg viewBox={`0 0 ${size} ${size}`}>
+        {data.map((item, index) => (
+          <PieChartSegment
+            key={`${item.color}-${index}`}
+            center={center}
+            radius={radius}
+            circumference={circumference}
+            angle={startAngles[index]}
+            color={item.color}
+            percent={item.percent}
+            strokeWidth={strokeWidth}
+          />
+        ))}
+        <Circle
+          cx={center}
+          cy={center}
+          r={radius}
+          fill="lightgrey"
+        />
+                <SvgText
+          x={center}
+          y={center}
+          textAnchor="middle"
+          dy=".3em"
+          fontSize="20"
+          fill="black"
+        >
+          {centerText}
+        </SvgText>
+      </Svg>
+    </View>
+  );
+};
+
 
 export default function HomeScreen() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -29,6 +110,14 @@ export default function HomeScreen() {
     setTempNumberOfBoxesToGive(numberOfBoxesToGive);
     setModalVisible(false);
   };
+
+  const data = [
+    { color: 'yellow', percent: USERS[0].numberOfBoxes },
+    { color: 'red', percent: USERS[0].numberOfBoxesToGive },
+  ];
+
+  const centerText = `${USERS[0].numberOfBoxes - numberOfBoxesToGive}`;
+
 
   return (
     <View style={s.container}>
@@ -57,6 +146,9 @@ export default function HomeScreen() {
           </View>
         </View>
       </View>
+
+      <PieChart size={220} strokeWidth={20} data={data} centerText={centerText} />
+
       <View style={s.card}>
         <View style={s.icon}>
           <Ionicons name="arrow-up-outline" size={32} color="#829E91" />
@@ -78,6 +170,8 @@ export default function HomeScreen() {
           </View>
         </View>
       </View>
+
+
 
       <Modal
         transparent={true}
@@ -226,5 +320,8 @@ const s = StyleSheet.create({
     flexDirection: 'row',
     gap: 8,
     alignItems: 'center',
+  },
+  rotate: {
+    transform: [{ rotateZ: '-90deg' }],
   },
 });
