@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Modal, TextInput, Dimensions } from 'react-native';
-import Svg, { Circle, Text as SvgText } from 'react-native-svg';
-import Animated, { interpolate, useAnimatedProps, useSharedValue, withTiming } from 'react-native-reanimated';
+import Svg, { Circle, Text as SvgText, Image as SvgImage } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 import ClientService from '../services/client-service';
 import Client from '../models/client';
 import { USERS } from '../models/mock-users';
 import { Link } from 'expo-router';
 
-
 const PieChartSegment = ({ center, radius, strokeWidth, color, circumference, angle, percent }: { center: number, radius: number, strokeWidth: number, color: string, circumference: number, angle: number, percent: number }) => {
   const strokeDashoffset = circumference * (1 - percent);
-  const rotateAngle = angle;
+  const rotateAngle = angle - 90; // Adjust the angle to start at the top
 
   return (
     <Circle
@@ -22,18 +20,12 @@ const PieChartSegment = ({ center, radius, strokeWidth, color, circumference, an
       stroke={color}
       strokeDasharray={circumference}
       strokeDashoffset={strokeDashoffset}
-      // transform={[
-      //   { translateX: center },
-      //   { translateY: center },
-      //   { rotate: `${rotateAngle}deg` },
-      //   { translateX: -center },
-      //   { translateY: -center },
-      // ]}
+      transform={`rotate(${rotateAngle}, ${center}, ${center})`}
     />
   );
 };
 
-const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: number, strokeWidth?: number, data: { color: string, percent: number }[], centerText: string }) => {
+const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: number, strokeWidth?: number, data: { color: string, percent: number }[], centerText: string, centerIcon: any }) => {
   const [startAngles, setStartAngles] = useState<number[]>([]);
   const center = size / 2;
   const radius = (size - strokeWidth) / 2;
@@ -41,7 +33,7 @@ const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: n
 
   useEffect(() => {
     let angle = 0;
-    const angles: number[] | ((prevState: never[]) => never[]) = [];
+    const angles: number[] = [];
     data.forEach(item => {
       angles.push(angle);
       angle += item.percent * 360;
@@ -51,7 +43,7 @@ const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: n
   }, [data]);
 
   return (
-    <View style={[{ width: size, height: size }]}>
+    <View style={{ width: size, height: size }}>
       <Svg viewBox={`0 0 ${size} ${size}`}>
         {data.map((item, index) => (
           <PieChartSegment
@@ -69,23 +61,24 @@ const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: n
           cx={center}
           cy={center}
           r={radius}
-          fill="lightgrey"
+          fill="#fff"
         />
-                <SvgText
+        <Ionicons name="cube-outline" size={48} color="#829E91" style={s.pieChartIcon} />
+        <SvgText
           x={center}
           y={center}
           textAnchor="middle"
           dy=".3em"
-          fontSize="20"
+          fontSize="70"
           fill="black"
         >
           {centerText}
         </SvgText>
+
       </Svg>
     </View>
   );
 };
-
 
 export default function HomeScreen() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -111,12 +104,14 @@ export default function HomeScreen() {
     setModalVisible(false);
   };
 
+  const totalBoxes = USERS[0].numberOfBoxes;
   const data = [
-    { color: 'yellow', percent: USERS[0].numberOfBoxes },
-    { color: 'red', percent: USERS[0].numberOfBoxesToGive },
+    { color: 'black', percent: numberOfBoxesToGive / totalBoxes },
+    { color: '#829E91', percent: 1 - (numberOfBoxesToGive / totalBoxes) },
   ];
 
-  const centerText = `${USERS[0].numberOfBoxes - numberOfBoxesToGive}`;
+  const centerText = `${numberOfBoxesToGive}`;
+  const centerIcon = require('../../assets/images/icon.png'); // Replace with your icon path
 
 
   return (
@@ -147,7 +142,7 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <PieChart size={220} strokeWidth={20} data={data} centerText={centerText} />
+      <PieChart size={200} strokeWidth={20} data={data} centerText={centerText} centerIcon={centerIcon}  />
 
       <View style={s.card}>
         <View style={s.icon}>
@@ -158,9 +153,10 @@ export default function HomeScreen() {
             <Text>Nombre de caisses à donner</Text>
             <View style={s.edit}>
               <Text style={s.number}>{numberOfBoxesToGive}</Text>
-              <Pressable onPress={() => setModalVisible(true)}>
-                <Ionicons name="pencil-outline" size={24} color="black" />
-              </Pressable>
+              <Pressable onPress={() => setModalVisible(true)} style={s.buttonPieChart}>
+          <Ionicons name="pencil-outline" size={32} color="black" />
+        </Pressable>
+
             </View>
           </View>
           <View >
@@ -170,8 +166,6 @@ export default function HomeScreen() {
           </View>
         </View>
       </View>
-
-
 
       <Modal
         transparent={true}
@@ -186,7 +180,7 @@ export default function HomeScreen() {
             <TextInput
               style={s.input}
               value={tempNumberOfBoxesToGive.toString()}
-              onChangeText={setTempNumberOfBoxesToGive}
+              onChangeText={(text) => setTempNumberOfBoxesToGive(Number(text))}
               keyboardType="numeric"
             />
             <Pressable
@@ -321,7 +315,15 @@ const s = StyleSheet.create({
     gap: 8,
     alignItems: 'center',
   },
-  rotate: {
-    transform: [{ rotateZ: '-90deg' }],
+  pieChartIcon: {
+    position: 'absolute',
+    top: 76,
+    left: 28,
+  },
+  buttonPieChart: {
+    position: 'absolute',
+    top: -180,
+    right: 30,
+    padding: 8,
   },
 });
