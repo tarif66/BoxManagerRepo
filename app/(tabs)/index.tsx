@@ -115,7 +115,7 @@ const s = StyleSheet.create({
   dataviz: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 8
   },
   container: {
     paddingTop: 32,
