@@ -1,84 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Pressable, Image, Modal, TextInput, Dimensions } from 'react-native';
-import Svg, { Circle, Text as SvgText, Image as SvgImage } from 'react-native-svg';
 import { Ionicons } from '@expo/vector-icons';
 import ClientService from '../services/client-service';
 import Client from '../models/client';
 import { USERS } from '../models/mock-users';
 import { Link } from 'expo-router';
+import { PieChart } from '../../components/pie-chart';
 
-const PieChartSegment = ({ center, radius, strokeWidth, color, circumference, angle, percent }: { center: number, radius: number, strokeWidth: number, color: string, circumference: number, angle: number, percent: number }) => {
-  const strokeDashoffset = circumference * (1 - percent);
-  const rotateAngle = angle - 90; // Adjust the angle to start at the top
-
-  return (
-    <Circle
-      cx={center}
-      cy={center}
-      r={radius}
-      strokeWidth={strokeWidth}
-      stroke={color}
-      strokeDasharray={circumference}
-      strokeDashoffset={strokeDashoffset}
-      transform={`rotate(${rotateAngle}, ${center}, ${center})`}
-    />
-  );
-};
-
-const PieChart = ({ size = 200, strokeWidth = 20, data, centerText }: { size?: number, strokeWidth?: number, data: { color: string, percent: number }[], centerText: string, centerIcon: any }) => {
-  const [startAngles, setStartAngles] = useState<number[]>([]);
-  const center = size / 2;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-
-  useEffect(() => {
-    let angle = 0;
-    const angles: number[] = [];
-    data.forEach(item => {
-      angles.push(angle);
-      angle += item.percent * 360;
-    });
-
-    setStartAngles(angles);
-  }, [data]);
-
-  return (
-    <View style={{ width: size, height: size }}>
-      <Svg viewBox={`0 0 ${size} ${size}`}>
-        {data.map((item, index) => (
-          <PieChartSegment
-            key={`${item.color}-${index}`}
-            center={center}
-            radius={radius}
-            circumference={circumference}
-            angle={startAngles[index]}
-            color={item.color}
-            percent={item.percent}
-            strokeWidth={strokeWidth}
-          />
-        ))}
-        <Circle
-          cx={center}
-          cy={center}
-          r={radius}
-          fill="#fff"
-        />
-        <Ionicons name="cube-outline" size={48} color="#829E91" style={s.pieChartIcon} />
-        <SvgText
-          x={center}
-          y={center}
-          textAnchor="middle"
-          dy=".3em"
-          fontSize="70"
-          fill="black"
-        >
-          {centerText}
-        </SvgText>
-
-      </Svg>
-    </View>
-  );
-};
 
 export default function HomeScreen() {
   const [clients, setClients] = useState<Client[]>([]);
@@ -119,13 +47,19 @@ export default function HomeScreen() {
       <Image source={require('../../assets/images/oenoco.png')} style={s.headerImage} />
       <View style={s.dataviz}>
         <View style={s.iconFat}>
-          <Ionicons name="cube-outline" size={48} color="#829E91" />
+          <Ionicons name="cube-outline" size={64} color="#829E91" />
         </View>
         <View style={s.description}>        
           <View>
             <Text style={s.numberFat}>{USERS[0].numberOfBoxes}</Text>
           </View>
-          <View style={s.pinIcon}>
+
+        </View>
+      </View>
+
+      <PieChart size={200} strokeWidth={20} data={data} centerText={centerText} centerIcon={centerIcon} setModalVisibleProp={setModalVisible} />
+
+      <View style={s.pinIcon}>
             <Pressable >
               <Link
                 href={{
@@ -139,33 +73,6 @@ export default function HomeScreen() {
             </Pressable>
             <Text style={s.location}>{USERS[0].location}</Text>
           </View>
-        </View>
-      </View>
-
-      <PieChart size={200} strokeWidth={20} data={data} centerText={centerText} centerIcon={centerIcon}  />
-
-      <View style={s.card}>
-        <View style={s.icon}>
-          <Ionicons name="arrow-up-outline" size={32} color="#829E91" />
-        </View>
-        <View style={s.description}>        
-          <View>
-            <Text>Nombre de caisses à donner</Text>
-            <View style={s.edit}>
-              <Text style={s.number}>{numberOfBoxesToGive}</Text>
-              <Pressable onPress={() => setModalVisible(true)} style={s.buttonPieChart}>
-          <Ionicons name="pencil-outline" size={32} color="black" />
-        </Pressable>
-
-            </View>
-          </View>
-          <View >
-            <Pressable style={[s.button, s.buttonClose]}>
-              <Text style={s.textStyle}>Donner</Text>
-            </Pressable>
-          </View>
-        </View>
-      </View>
 
       <Modal
         transparent={true}
@@ -313,17 +220,8 @@ const s = StyleSheet.create({
   pinIcon: {
     flexDirection: 'row',
     gap: 8,
+    paddingTop: 120,
     alignItems: 'center',
   },
-  pieChartIcon: {
-    position: 'absolute',
-    top: 76,
-    left: 28,
-  },
-  buttonPieChart: {
-    position: 'absolute',
-    top: -180,
-    right: 30,
-    padding: 8,
-  },
+
 });
