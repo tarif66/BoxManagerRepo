@@ -58,7 +58,7 @@ export const PieChart = ({ size = 200, strokeWidth = 20, data, centerText, setMo
             cx={center}
             cy={center}
             r={radius}
-            fill="#fff"
+            fill="#F0F0F0"
             />
             <View style={s.iconsBoxToGive}>
               <Ionicons name="arrow-up-outline" size={24} color="#829E91" style={s.pieChartIcon} />
@@ -71,13 +71,13 @@ export const PieChart = ({ size = 200, strokeWidth = 20, data, centerText, setMo
             textAnchor="middle"
             dy=".3em"
             fontSize="70"
-            fill="black"
+            fill="#3B4E45"
             >
             {centerText}
             </SvgText>
         </Svg>
         <Pressable onPress={() => setModalVisibleProp(true)} style={s.buttonPieChart}>
-          <Ionicons name="pencil-outline" size={40} color="black" />
+          <Ionicons name="pencil-outline" size={40} color="#3B4E45" />
         </Pressable>
         </View>
     );
@@ -107,4 +107,9 @@ const s = StyleSheet.create({
         alignItems: 'center',
         padding: 8,
         },
+    number: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      color: '#3B4E45',
+    },
 });

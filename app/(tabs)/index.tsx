@@ -34,8 +34,8 @@ export default function HomeScreen() {
 
   const totalBoxes = USERS[0].numberOfBoxes;
   const data = [
-    { color: 'black', percent: numberOfBoxesToGive / totalBoxes },
-    { color: '#829E91', percent: 1 - (numberOfBoxesToGive / totalBoxes) },
+    { color: '#CA6E52', percent: numberOfBoxesToGive / totalBoxes },
+    { color: 'white', percent: 1 - (numberOfBoxesToGive / totalBoxes) },
   ];
 
   const centerText = `${numberOfBoxesToGive}`;
@@ -155,10 +155,12 @@ const s = StyleSheet.create({
   number: {
     fontSize: 24,
     fontWeight: 'bold',
+    color: '#3B4E45',
   },
   numberFat: {
     fontSize: 100,
-    fontWeight: 'thin'
+    fontWeight: 'thin',
+    color: '#3B4E45',
   },
   description: {
     gap: 16,

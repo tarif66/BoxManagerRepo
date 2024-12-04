@@ -11,7 +11,7 @@ const CustomMarker = ({ number }: { number: number }) => {
 
 const styles = StyleSheet.create({
   marker: {
-    backgroundColor: "#829E91",
+    backgroundColor: "#CA6E52",
     padding: 5,
     borderRadius: 40,
     borderColor: 'white',
