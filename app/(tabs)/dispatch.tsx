@@ -1,12 +1,14 @@
 // screens/DispatchScreen.tsx
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Pressable, Modal, TextInput, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Pressable, Modal, TextInput, Text, ActivityIndicator } from 'react-native';
 import TransactionCard from '@/components/transaction-card';
 import { Ionicons } from '@expo/vector-icons';
 import GetNewBoxesCard from '@/components/getNewBox-card';
+import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 
-const transactions = [
+const initialTransactions = [
   {
+    id: '1',
     boxes: 2,
     client: {
       brand: 'Le Duc du bar',
@@ -15,6 +17,7 @@ const transactions = [
     date: '23 novembre 2024',
   },
   {
+    id: '2',
     boxes: 8,
     client: {
       brand: 'Biocoop Saint-Dizier',
@@ -23,24 +26,18 @@ const transactions = [
     date: '23 novembre 2024',
   },
   {
+    id: '3',
     boxes: 2,
     client: {
       brand: 'Domaine du Clos Michel',
       location: { latitude: 48.76516, longitude: 5.16, name: 'Toul' },
     },
     date: '23 novembre 2024',
-  },
-  {
-    boxes: 8,
-    client: {
-      brand: 'Brand D',
-      location: { latitude: 34.0522, longitude: -118.2437, name: 'Los Angeles' },
-    },
-    date: '2023-10-04',
   }
 ];
 
 export default function DispatchScreen() {
+  const [transactions, setTransactions] = useState(initialTransactions);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -54,7 +51,7 @@ export default function DispatchScreen() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 5000); // 10 seconds
+    }, 5000); // 5 seconds
   };
 
   const closeModal1 = () => {
@@ -69,46 +66,37 @@ export default function DispatchScreen() {
     setModalVisible2(false);
   };
 
-  return (
-    <><ScrollView style={s.container}>
-        <GetNewBoxesCard
-          key={1}
-          boxes={transactions[0].boxes}
-          client={transactions[0].client}
-          date={transactions[0].date} 
-          openModal={openModal1}
-          />
-        <GetNewBoxesCard
-          key={1}
-          boxes={transactions[1].boxes}
-          client={transactions[1].client}
-          date={transactions[1].date} 
-          openModal={openModal1} />
-
+  const renderItem = ({ item, drag, isActive }: RenderItemParams<typeof initialTransactions[0]>) => {
+    return (
+      <Pressable
+        onLongPress={drag}
+        disabled={isActive}
+        style={[s.card, isActive && { backgroundColor: '#f0f0f0' }]}
+      >
         <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
+          key={item.id}
+          boxes={item.boxes}
+          client={item.client}
+          date={item.date}
           openModal={openModal1}
-        /> 
-        {/* <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          /> */}
-        {/* <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          /> */}
-    </ScrollView><Pressable style={s.floatingButton}  onPress={openModal2}>
+        />
+      </Pressable>
+    );
+  };
+
+  return (
+    <View style={s.container}>
+      <DraggableFlatList
+        data={transactions}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        onDragEnd={({ data }) => setTransactions(data)}
+      />
+
+      <Pressable style={s.floatingButton} onPress={openModal2}>
         <Ionicons name="add" size={24} color="white" />
       </Pressable>
+
       <Modal
         transparent={true}
         visible={modalVisible1}
@@ -136,6 +124,7 @@ export default function DispatchScreen() {
           </View>
         </View>
       </Modal>
+
       <Modal
         transparent={true}
         visible={modalVisible2}
@@ -148,7 +137,6 @@ export default function DispatchScreen() {
             <Text style={s.modalText}>Combien de boîtes récupérez-vous ?</Text>
             <TextInput
               style={s.input}
-             
               keyboardType="numeric"
             />
             <Pressable
@@ -165,7 +153,7 @@ export default function DispatchScreen() {
           </View>
         </View>
       </Modal>
-      </>
+    </View>
   );
 }
 
@@ -188,6 +176,19 @@ const s = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  card: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    backgroundColor: 'white',
+    marginBottom: 8,
+    borderRadius: 8,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   floatingButton: {
     position: 'absolute',
@@ -233,7 +234,7 @@ const s = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    },
+  },
   input: {
     height: 40,
     borderColor: 'gray',
@@ -243,4 +244,4 @@ const s = StyleSheet.create({
     width: 100,
     textAlign: 'center',
   },
-  });
+});
