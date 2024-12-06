@@ -39,6 +39,14 @@ export const PieChart = ({ size = 200, strokeWidth = 20, data, centerText, setMo
         setStartAngles(angles);
     }, [data]);
 
+    const dynamicStylesIcon = {
+      left: parseInt(centerText) > 0 ? -58 : -30,
+    };
+
+    const dynamicStylesPencil = {
+      right: parseInt(centerText) > 0 ? -130 : -110,
+    };
+    
     return (
         <View style={{ width: size, height: size }}>
         <Svg viewBox={`0 0 ${size} ${size}`}>
@@ -60,11 +68,11 @@ export const PieChart = ({ size = 200, strokeWidth = 20, data, centerText, setMo
             r={radius}
             fill="#F0F0F0"
             />
-            <View style={s.iconsBoxToGive}>
+            <View style={[s.iconsBoxToGive, dynamicStylesIcon]}>
               <Ionicons name="arrow-up-outline" size={24} color="#829E91" style={s.pieChartIcon} />
               <Ionicons name="cube-outline" size={48} color="#829E91" style={s.pieChartIcon} />
             </View>
-
+            {parseInt(centerText) > 0 && (
             <SvgText
             x={center}
             y={center}
@@ -75,8 +83,9 @@ export const PieChart = ({ size = 200, strokeWidth = 20, data, centerText, setMo
             >
             {centerText}
             </SvgText>
+            )}
         </Svg>
-        <Pressable onPress={() => setModalVisibleProp(true)} style={s.buttonPieChart}>
+        <Pressable onPress={() => setModalVisibleProp(true)} style={[s.buttonPieChart, dynamicStylesPencil]}>
           <Ionicons name="pencil-outline" size={40} color="#3B4E45" />
         </Pressable>
         </View>
@@ -92,13 +101,11 @@ const s = StyleSheet.create({
     buttonPieChart: {
         // position: 'absolute',
         top: -125,
-        right: -130,
         padding: 8,
         },
     iconsBoxToGive: {
         position: 'absolute',
         top: 50,
-        left: -58,
         width: 200,
         height: 200,
         display: 'flex',

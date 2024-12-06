@@ -13,6 +13,7 @@ export default function HomeScreen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [numberOfBoxesToGive, setNumberOfBoxesToGive] = useState(USERS[0].numberOfBoxesToGive);
   const [tempNumberOfBoxesToGive, setTempNumberOfBoxesToGive] = useState(USERS[0].numberOfBoxesToGive);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     ClientService.getClients().then(clients => setClients(clients));
@@ -21,15 +22,21 @@ export default function HomeScreen() {
   console.log('Current clients state:', clients); // Debugging log
 
   const handleSave = () => {
+    if (tempNumberOfBoxesToGive > USERS[0].numberOfBoxes) {
+      setErrorMessage('The number of boxes to give cannot be higher than the total number of boxes.');
+      return;
+    }
     USERS[0].numberOfBoxesToGive = tempNumberOfBoxesToGive;
     setNumberOfBoxesToGive(tempNumberOfBoxesToGive);
     clients[0].locations[0].numberOfBoxes = tempNumberOfBoxesToGive;
     setModalVisible(false);
+    setErrorMessage('');
   };
 
   const handleCancel = () => {
     setTempNumberOfBoxesToGive(numberOfBoxesToGive);
     setModalVisible(false);
+    setErrorMessage('');
   };
 
   const totalBoxes = USERS[0].numberOfBoxes;
@@ -90,6 +97,7 @@ export default function HomeScreen() {
               onChangeText={(text) => setTempNumberOfBoxesToGive(Number(text))}
               keyboardType="numeric"
             />
+            {errorMessage ? <Text style={s.errorText}>{errorMessage}</Text> : null}
             <Pressable
               style={[s.button, s.buttonClose]}
               onPress={handleSave}
@@ -110,6 +118,10 @@ export default function HomeScreen() {
 }
 
 const s = StyleSheet.create({
+  errorText: {
+    color: 'red',
+    marginBottom: 15,
+  },
   iconFat: {
   },
   dataviz: {
