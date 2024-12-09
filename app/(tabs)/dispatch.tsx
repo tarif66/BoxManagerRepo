@@ -1,12 +1,15 @@
 // screens/DispatchScreen.tsx
 import React, { useState } from 'react';
-import { View, ScrollView, StyleSheet, Pressable, Modal, TextInput, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Pressable, Modal, TextInput, Text, ActivityIndicator, Dimensions, ScrollView } from 'react-native';
 import TransactionCard from '@/components/transaction-card';
 import { Ionicons } from '@expo/vector-icons';
 import GetNewBoxesCard from '@/components/getNewBox-card';
+import { StackedBarChart } from 'react-native-chart-kit';
+import { USERS } from '../models/mock-users';
 
-const transactions = [
+const initialTransactions = [
   {
+    id: '1',
     boxes: 2,
     client: {
       brand: 'Le Duc du bar',
@@ -15,6 +18,7 @@ const transactions = [
     date: '23 novembre 2024',
   },
   {
+    id: '2',
     boxes: 8,
     client: {
       brand: 'Biocoop Saint-Dizier',
@@ -23,6 +27,7 @@ const transactions = [
     date: '23 novembre 2024',
   },
   {
+    id: '3',
     boxes: 2,
     client: {
       brand: 'Domaine du Clos Michel',
@@ -31,6 +36,7 @@ const transactions = [
     date: '23 novembre 2024',
   },
   {
+    id: '4',
     boxes: 8,
     client: {
       brand: 'Brand D',
@@ -41,6 +47,7 @@ const transactions = [
 ];
 
 export default function DispatchScreen() {
+  const [transactions, setTransactions] = useState(initialTransactions);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -54,7 +61,7 @@ export default function DispatchScreen() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 5000); // 10 seconds
+    }, 5000); // 5 seconds
   };
 
   const closeModal1 = () => {
@@ -69,103 +76,131 @@ export default function DispatchScreen() {
     setModalVisible2(false);
   };
 
-  return (
-    <><ScrollView style={s.container}>
-        <GetNewBoxesCard
-          key={1}
-          boxes={transactions[0].boxes}
-          client={transactions[0].client}
-          date={transactions[0].date} 
-          openModal={openModal1}
-          />
-        <GetNewBoxesCard
-          key={1}
-          boxes={transactions[1].boxes}
-          client={transactions[1].client}
-          date={transactions[1].date} 
-          openModal={openModal1} />
+  const user = USERS[0];
+  const data = {
+    labels: user.historicalData.map(item => item.month),
+    legend: ['Owned', 'Acquired'],
+    data: user.historicalData.map(item => [item.owned, item.acquired]),
+    barColors: ['#ca6e52', '#829E91'],
+  };
 
-        <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-        /> 
-        {/* <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          /> */}
-        {/* <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          /> */}
-    </ScrollView><Pressable style={s.floatingButton}  onPress={openModal2}>
-        <Ionicons name="add" size={24} color="white" />
-      </Pressable>
-      <Modal
-        transparent={true}
-        visible={modalVisible1}
-        onRequestClose={closeModal1}
-      >
-        <View style={s.modalBackground}>
-          <View style={s.modalView}>
-            {loading ? (
-              <>
-                <Text style={s.modalText}>En attente de validation</Text>
-                <ActivityIndicator size="large" color="#829E91" />
-              </>
-            ) : (
-              <>
-                <Text style={s.modalText}>Transfert accepté!</Text>
-                <Ionicons name="checkmark-outline" size={32} color="green" />
-              </>
-            )}
-            <Pressable
-              style={[s.button, s.buttonClose]}
-              onPress={closeModal1}
-            >
-              <Text style={s.textStyle}>Fermer</Text>
-            </Pressable>
+  return (
+    <>
+      <View style={s.stickyHeader}>
+        <ScrollView horizontal style={s.horizontalScrollView}>
+          <StackedBarChart
+          data={data}
+          width={Dimensions.get('window').width*1.5}
+
+          height={220}
+          chartConfig={{
+            backgroundColor: '#ffffff',
+            backgroundGradientFrom: '#ffffff',
+            backgroundGradientTo: '#ffffff',
+            decimalPlaces: 2,
+            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+            style: {
+
+            },
+            propsForDots: {
+              r: '6',
+              strokeWidth: '2',
+              stroke: 'black',
+            },
+          }}
+          style={{
+            backgroundColor: 'white',
+          }}
+          hideLegend={true}
+        />
+        </ScrollView>
+        <View style={s.legendContainer}>
+          <View style={s.legendItem}>
+            <View style={[s.legendColor, { backgroundColor: '#ca6e52' }]} />
+            <Text style={s.legendText}>Owned</Text>
+          </View>
+          <View style={s.legendItem}>
+            <View style={[s.legendColor, { backgroundColor: '#829E91' }]} />
+            <Text style={s.legendText}>Acquired</Text>
           </View>
         </View>
-      </Modal>
-      <Modal
-        transparent={true}
-        visible={modalVisible2}
-        onRequestClose={() => {
-          setModalVisible2(!modalVisible2);
-        }}
-      >
-        <View style={s.modalBackground}>
-          <View style={s.modalView}>
-            <Text style={s.modalText}>Combien de boîtes récupérez-vous ?</Text>
-            <TextInput
-              style={s.input}
-             
-              keyboardType="numeric"
-            />
-            <Pressable
-              style={[s.button, s.buttonClose]}
-            >
-              <Text style={s.textStyle}>Save</Text>
-            </Pressable>
-            <Pressable
-              style={[s.button, s.buttonCancel]}
-              onPress={handleCancel}
-            >
-              <Text style={s.textStyle}>Cancel</Text>
-            </Pressable>
+      </View>
+      <ScrollView style={s.container}>
+
+
+        {transactions.map((transaction, index) => (
+          <TransactionCard
+            key={transaction.id}
+            boxes={transaction.boxes}
+            client={transaction.client}
+            date={transaction.date}
+            openModal={openModal1}
+          />
+        ))}
+
+        <Pressable style={s.floatingButton} onPress={openModal2}>
+          <Ionicons name="add" size={24} color="white" />
+        </Pressable>
+
+        <Modal
+          transparent={true}
+          visible={modalVisible1}
+          onRequestClose={closeModal1}
+        >
+          <View style={s.modalBackground}>
+            <View style={s.modalView}>
+              {loading ? (
+                <>
+                  <Text style={s.modalText}>En attente de validation</Text>
+                  <ActivityIndicator size="large" color="#829E91" />
+                </>
+              ) : (
+                <>
+                  <Text style={s.modalText}>Transfert accepté!</Text>
+                  <Ionicons name="checkmark-outline" size={32} color="green" />
+                </>
+              )}
+              <Pressable
+                style={[s.button, s.buttonClose]}
+                onPress={closeModal1}
+              >
+                <Text style={s.textStyle}>Fermer</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      </Modal>
-      </>
+        </Modal>
+
+        <Modal
+          transparent={true}
+          visible={modalVisible2}
+          onRequestClose={() => {
+            setModalVisible2(!modalVisible2);
+          }}
+        >
+          <View style={s.modalBackground}>
+            <View style={s.modalView}>
+              <Text style={s.modalText}>Combien de boîtes récupérez-vous ?</Text>
+              <TextInput
+                style={s.input}
+                keyboardType="numeric"
+              />
+              <Pressable
+                style={[s.button, s.buttonClose]}
+              >
+                <Text style={s.textStyle}>Save</Text>
+              </Pressable>
+              <Pressable
+                style={[s.button, s.buttonCancel]}
+                onPress={handleCancel}
+              >
+                <Text style={s.textStyle}>Cancel</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
+      </ScrollView>
+    </>
   );
 }
 
@@ -233,7 +268,7 @@ const s = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    },
+  },
   input: {
     height: 40,
     borderColor: 'gray',
@@ -243,4 +278,29 @@ const s = StyleSheet.create({
     width: 100,
     textAlign: 'center',
   },
-  });
+  legendContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 8,
+  },
+  legendItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 8,
+  },
+  legendColor: {
+    width: 16,
+    height: 16,
+    marginRight: 4,
+  },
+  legendText: {
+    fontSize: 14,
+    color: '#000',
+  },
+  stickyHeader: {
+    backgroundColor: 'white',
+  },
+  horizontalScrollView: {
+    backgroundColor: 'white',
+  },
+});

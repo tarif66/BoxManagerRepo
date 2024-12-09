@@ -6,6 +6,7 @@ export default class User {
     location: string;
     latitude: number;
     longitude: number;
+    historicalData: { month: string, owned: number, acquired: number }[];   
 
     constructor(
     id: number,
@@ -14,7 +15,8 @@ export default class User {
     numberOfBoxesToGive: number,
     location: string,
     latitude: number,
-    longitude: number
+    longitude: number,
+    historicalData: { month: string, owned: number, acquired: number }[]
 
     ) {
     this.id = id;
@@ -24,6 +26,7 @@ export default class User {
     this.location = location;
     this.latitude = latitude;
     this.longitude = longitude;
+    historicalData = historicalData;
     }
 }
     

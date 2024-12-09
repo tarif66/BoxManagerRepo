@@ -8,6 +8,14 @@ export const USERS: User[] = [
         numberOfBoxesToGive: 5,
         latitude: 49.2161,
         longitude: 3.9981,
-        location: "Village by CA Reims"
+        location: "Village by CA Reims",
+        historicalData: [
+            { month: 'Jan', owned: 10, acquired: 10 },
+            { month: 'Feb', owned: 15, acquired: 3 },
+            { month: 'Mar', owned: 12, acquired: 5 },
+            { month: 'Apr', owned: 8, acquired: 4 },
+            { month: 'May', owned: 6, acquired: 4 },
+            { month: 'Jun', owned: 5, acquired: 3 },
+        ]
     }
 ];
