@@ -120,35 +120,42 @@ export default function DispatchScreen() {
         <ScrollView horizontal style={s.horizontalScrollView}>
           <StackedBarChart
             data={data}
-            width={Dimensions.get('window').width * 1.5}
-            height={220}
+            width={Dimensions.get('window').width * 1}
+            height={200}
             chartConfig={{
               backgroundColor: '#ffffff',
               backgroundGradientFrom: '#ffffff',
               backgroundGradientTo: '#ffffff',
-              decimalPlaces: 2,
+              decimalPlaces: 0,
               color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
               style: {},
+              propsForLabels: {
+                fontSize: 13,
+              },
               propsForDots: {
                 r: '6',
                 strokeWidth: '2',
                 stroke: 'black',
               },
+              formatYLabel: (label) => `${parseInt(label, 10)}`, // Format y-axis labels as integers
             }}
             style={{
               backgroundColor: 'white',
+              paddingTop: 16,
+              paddingHorizontal: 8,
             }}
             hideLegend={true}
           />
+          
         </ScrollView>
         <View style={s.legendContainer}>
           <View style={s.legendItem}>
-            <View style={[s.legendColor, { backgroundColor: '#ca6e52' }]} />
+            <View style={[s.legendColor, { backgroundColor: '#ca6e52', borderRadius: 10 }]} />
             <Text style={s.legendText}>Owned</Text>
           </View>
           <View style={s.legendItem}>
-            <View style={[s.legendColor, { backgroundColor: '#829E91' }]} />
+            <View style={[s.legendColor, { backgroundColor: '#829E91', borderRadius: 10 }]} />
             <Text style={s.legendText}>Acquired</Text>
           </View>
         </View>

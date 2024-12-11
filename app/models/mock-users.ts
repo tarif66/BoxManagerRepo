@@ -10,7 +10,7 @@ export const USERS: User[] = [
         longitude: 3.9981,
         location: "Village by CA Reims",
         historicalData: [
-            { month: 'Jan', owned: 10, acquired: 10 },
+            { month: 'Jan', owned: 10, acquired: 100 },
             { month: 'Feb', owned: 15, acquired: 3 },
             { month: 'Mar', owned: 12, acquired: 5 },
             { month: 'Apr', owned: 8, acquired: 4 },
