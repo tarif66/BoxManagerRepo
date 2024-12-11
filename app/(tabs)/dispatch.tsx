@@ -15,7 +15,7 @@ const initialTransactions = [
       brand: 'Le Duc du bar',
       location: { latitude: 48.76516, longitude: 5.16, name: 'Bar-le-Duc' },
     },
-    date: '23 novembre 2024',
+    date: '2023-09-04',
   },
   {
     id: '2',
@@ -24,7 +24,7 @@ const initialTransactions = [
       brand: 'Biocoop Saint-Dizier',
       location: { latitude: 48.650989, longitude: 4.961442, name: 'Saint-Dizier' },
     },
-    date: '23 novembre 2024',
+    date: '2023-04-04',
   },
   {
     id: '3',
@@ -33,7 +33,7 @@ const initialTransactions = [
       brand: 'Domaine du Clos Michel',
       location: { latitude: 48.76516, longitude: 5.16, name: 'Toul' },
     },
-    date: '23 novembre 2024',
+    date: '2023-10-03',
   },
   {
     id: '4',
@@ -84,36 +84,63 @@ export default function DispatchScreen() {
     barColors: ['#ca6e52', '#829E91'],
   };
 
+  const renderTransactions = () => {
+    let currentMonthYear = '';
+    const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+    return sortedTransactions.map((transaction, index) => {
+      const transactionMonthYear = new Date(transaction.date).toLocaleString('default', { month: 'long', year: 'numeric' });
+      const showDivider = transactionMonthYear !== currentMonthYear;
+      currentMonthYear = transactionMonthYear;
+
+      const formattedDate = new Date(transaction.date).toLocaleDateString('default', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      });
+
+      return (
+        <View key={transaction.id}>
+          {showDivider && (
+            <Text style={s.divider}>{transactionMonthYear}</Text>
+          )}
+          <TransactionCard
+            boxes={transaction.boxes}
+            client={transaction.client}
+            date={formattedDate}
+            openModal={openModal1}
+          />
+        </View>
+      );
+    });
+  };
+
   return (
     <>
       <View style={s.stickyHeader}>
         <ScrollView horizontal style={s.horizontalScrollView}>
           <StackedBarChart
-          data={data}
-          width={Dimensions.get('window').width*1.5}
-
-          height={220}
-          chartConfig={{
-            backgroundColor: '#ffffff',
-            backgroundGradientFrom: '#ffffff',
-            backgroundGradientTo: '#ffffff',
-            decimalPlaces: 2,
-            color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-            style: {
-
-            },
-            propsForDots: {
-              r: '6',
-              strokeWidth: '2',
-              stroke: 'black',
-            },
-          }}
-          style={{
-            backgroundColor: 'white',
-          }}
-          hideLegend={true}
-        />
+            data={data}
+            width={Dimensions.get('window').width * 1.5}
+            height={220}
+            chartConfig={{
+              backgroundColor: '#ffffff',
+              backgroundGradientFrom: '#ffffff',
+              backgroundGradientTo: '#ffffff',
+              decimalPlaces: 2,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {},
+              propsForDots: {
+                r: '6',
+                strokeWidth: '2',
+                stroke: 'black',
+              },
+            }}
+            style={{
+              backgroundColor: 'white',
+            }}
+            hideLegend={true}
+          />
         </ScrollView>
         <View style={s.legendContainer}>
           <View style={s.legendItem}>
@@ -127,18 +154,7 @@ export default function DispatchScreen() {
         </View>
       </View>
       <ScrollView style={s.container}>
-
-
-        {transactions.map((transaction, index) => (
-          <TransactionCard
-            key={transaction.id}
-            boxes={transaction.boxes}
-            client={transaction.client}
-            date={transaction.date}
-            openModal={openModal1}
-          />
-        ))}
-
+        {renderTransactions()}
         <Pressable style={s.floatingButton} onPress={openModal2}>
           <Ionicons name="add" size={24} color="white" />
         </Pressable>
@@ -302,5 +318,11 @@ const s = StyleSheet.create({
   },
   horizontalScrollView: {
     backgroundColor: 'white',
+  },
+  divider: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginVertical: 8,
+    color: '#000',
   },
 });
