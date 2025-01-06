@@ -4,8 +4,9 @@ import { View, ScrollView, StyleSheet, Pressable, Modal, TextInput, Text, Activi
 import TransactionCard from '@/components/transaction-card';
 import { Ionicons } from '@expo/vector-icons';
 import GetNewBoxesCard from '@/components/getNewBox-card';
+import * as Location from 'expo-location';
 
-const transactions = [
+const initialTransactions = [
   {
     boxes: 2,
     client: {
@@ -41,9 +42,12 @@ const transactions = [
 ];
 
 export default function DispatchScreen() {
+  const [transactions, setTransactions] = useState(initialTransactions);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [newBoxes, setNewBoxes] = useState('');
+  const [location, setLocation] = useState(null);
 
   const handleCancel = () => {
     setModalVisible2(false);
@@ -54,14 +58,22 @@ export default function DispatchScreen() {
     setLoading(true);
     setTimeout(() => {
       setLoading(false);
-    }, 5000); // 10 seconds
+    }, 5000); // 5 seconds
   };
 
   const closeModal1 = () => {
     setModalVisible1(false);
   };
 
-  const openModal2 = () => {
+  const openModal2 = async () => {
+    let { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Permission to access location was denied');
+      return;
+    }
+
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
     setModalVisible2(true);
   };
 
@@ -69,44 +81,38 @@ export default function DispatchScreen() {
     setModalVisible2(false);
   };
 
-  return (
-    <><ScrollView style={s.container}>
-        <GetNewBoxesCard
-          key={1}
-          boxes={transactions[0].boxes}
-          client={transactions[0].client}
-          date={transactions[0].date} 
-          openModal={openModal1}
-          />
-        <GetNewBoxesCard
-          key={1}
-          boxes={transactions[1].boxes}
-          client={transactions[1].client}
-          date={transactions[1].date} 
-          openModal={openModal1} />
+  const handleSave = () => {
+    const newTransaction = {
+      boxes: parseInt(newBoxes, 10),
+      client: {
+        brand: 'Current Location',
+        location: {
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          name: 'Current Location',
+        },
+      },
+      date: new Date().toLocaleDateString(),
+    };
 
-        <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-        /> 
-        {/* <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          /> */}
-        {/* <TransactionCard
-          key={1}
-          boxes={transactions[2].boxes}
-          client={transactions[2].client}
-          date={transactions[2].date} 
-          openModal={openModal1}
-          /> */}
-    </ScrollView><Pressable style={s.floatingButton}  onPress={openModal2}>
+    setTransactions([...transactions, newTransaction]);
+    setModalVisible2(false);
+  };
+
+  return (
+    <>
+      <ScrollView style={s.container}>
+        {transactions.map((transaction, index) => (
+          <GetNewBoxesCard
+            key={index}
+            boxes={transaction.boxes}
+            client={transaction.client}
+            date={transaction.date}
+            openModal={openModal1}
+          />
+        ))}
+      </ScrollView>
+      <Pressable style={s.floatingButton} onPress={openModal2}>
         <Ionicons name="add" size={24} color="white" />
       </Pressable>
       <Modal
@@ -139,20 +145,20 @@ export default function DispatchScreen() {
       <Modal
         transparent={true}
         visible={modalVisible2}
-        onRequestClose={() => {
-          setModalVisible2(!modalVisible2);
-        }}
+        onRequestClose={closeModal2}
       >
         <View style={s.modalBackground}>
           <View style={s.modalView}>
             <Text style={s.modalText}>Combien de boîtes récupérez-vous ?</Text>
             <TextInput
               style={s.input}
-             
               keyboardType="numeric"
+              value={newBoxes}
+              onChangeText={setNewBoxes}
             />
             <Pressable
               style={[s.button, s.buttonClose]}
+              onPress={handleSave}
             >
               <Text style={s.textStyle}>Save</Text>
             </Pressable>
@@ -165,7 +171,7 @@ export default function DispatchScreen() {
           </View>
         </View>
       </Modal>
-      </>
+    </>
   );
 }
 
@@ -233,7 +239,7 @@ const s = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
-    },
+  },
   input: {
     height: 40,
     borderColor: 'gray',
@@ -243,4 +249,4 @@ const s = StyleSheet.create({
     width: 100,
     textAlign: 'center',
   },
-  });
+});
