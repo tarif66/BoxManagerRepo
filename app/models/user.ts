@@ -1,32 +1,17 @@
 export default class User {
     id: number;
-    name: string;
-    numberOfBoxes: number;
-    numberOfBoxesToGive: number;
-    location: string;
-    latitude: number;
-    longitude: number;
-    boxHistory: { date: string; boxes: number; }[];
+    forName: string;
+    lastName: string
 
     constructor(
     id: number,
-    name: string,
-    numberOfBoxes: number,
-    numberOfBoxesToGive: number,
-    location: string,
-    latitude: number,
-    longitude: number,
-    boxHistory: { date: string; boxes: number; }[]
+    forName: string,
+    lastName: string
 
     ) {
     this.id = id;
-    this.name = name;
-    this.numberOfBoxes = numberOfBoxes;
-    this.numberOfBoxesToGive = numberOfBoxesToGive;
-    this.location = location;
-    this.latitude = latitude;
-    this.longitude = longitude;
-    this.boxHistory = boxHistory;
+    this.forName = forName;
+    this.lastName = lastName;
     }
 }
     

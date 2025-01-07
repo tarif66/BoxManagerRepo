@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Pressable, Image, Modal, TextInput, Dimensions 
 import { Ionicons } from '@expo/vector-icons';
 import ClientService from '../services/client-service';
 import Client from '../models/client';
-import { USERS } from '../models/mock-users';
+import { USERS } from '../models/mock-user';
 import { Link } from 'expo-router';
 import { PieChart } from '../../components/pie-chart';
 
