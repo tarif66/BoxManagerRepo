@@ -1,7 +1,8 @@
 import Company from './company';
-import {USERS} from './mock-user';
-import {LOCATIONS} from './mock-locations';
-export const COMPANIES: Company[] = [
+import USERS from './mock-user';
+import LOCATIONS from './mock-locations';
+
+const COMPANIES: Company[] = [
     {
         id: 1,
         name: "Company 1",
@@ -11,3 +12,5 @@ export const COMPANIES: Company[] = [
         listOfLocations: [LOCATIONS[0]]
     }
 ];
+
+export default COMPANIES;

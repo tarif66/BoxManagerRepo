@@ -17,7 +17,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
       }}>
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="index"
         options={{
           title: 'Inventaire',
@@ -25,7 +25,7 @@ export default function TabLayout() {
             <TabBarIcon name={focused ? 'cube' : 'cube-outline'} color='#829E91' />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="dispatch"
         options={{
@@ -35,7 +35,7 @@ export default function TabLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="map"
         options={{
           title: 'Caisses disponibles',
@@ -43,7 +43,7 @@ export default function TabLayout() {
             <TabBarIcon name={focused ? 'map' : 'map-outline'} color='#829E91' />
           ),
         }}
-      />
+      /> */}
     </Tabs>
   );
 }

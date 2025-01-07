@@ -7,8 +7,7 @@ export default class Location {
     longitude: number;
     numberOfBoxes: number;
     numberOfBoxesToGive: number;
-    city: string;
-    company: Company
+    city: string
 
     constructor(
         id: number,
@@ -17,8 +16,7 @@ export default class Location {
         longitude: number,
         numberOfBoxes: 0,
         numberOfBoxesToGive: 0,
-        city: string,
-        company: Company
+        city: string
     ) {
     this.id = id;
     this.name = name;
@@ -26,7 +24,6 @@ export default class Location {
     this.longitude = longitude;
     this.numberOfBoxes = numberOfBoxes;
     this.numberOfBoxesToGive = numberOfBoxesToGive;
-    this.city = city;
-    this.company = company;
+    this.city = city
     }
    }

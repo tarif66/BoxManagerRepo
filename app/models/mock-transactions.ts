@@ -1,5 +1,5 @@
 import Transaction from './transaction';
-import {LOCATIONS} from './mock-locations';
+import LOCATIONS from './mock-locations';
 
 export const TRANSACTIONS: Transaction[] = [
     {
@@ -24,3 +24,5 @@ export const TRANSACTIONS: Transaction[] = [
         location: LOCATIONS[0],
     }
 ];
+
+export default TRANSACTIONS;

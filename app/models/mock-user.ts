@@ -7,3 +7,5 @@ export const USERS: User[] = [
         lastName: "Doe"
     }
 ];
+
+export default USERS;

@@ -1,5 +1,5 @@
 import Location from './location';
-import {COMPANIES} from './mock-company';
+import COMPANIES from './mock-company';
 
 export const LOCATIONS: Location[] = [
     {
@@ -10,6 +10,7 @@ export const LOCATIONS: Location[] = [
         numberOfBoxes: 0,
         numberOfBoxesToGive: 0,
         city: "City 1",
-        company: COMPANIES[0]
     }
 ];
+
+export default LOCATIONS;
