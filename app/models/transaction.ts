@@ -5,14 +5,14 @@ export default class Transaction {
     type: string;
     date: string;
     boxes: number;
-    location: Location;
+    location: string;
 
     constructor(
         id: number,
         type: string,
         date: string,
         boxes: number,
-        location: Location
+        location: string
     ) {
         this.id = id;
         this.type = type;

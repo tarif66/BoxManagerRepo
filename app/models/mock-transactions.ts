@@ -7,21 +7,21 @@ export const TRANSACTIONS: Transaction[] = [
         type: "Outgoing",
         date: "2018-01-01",
         boxes: 10,
-        location: LOCATIONS[0],
+        location: LOCATIONS[0].name,
     },
     {
         id: 2,
         type: "Incoming",
         date: "2018-01-02",
         boxes: 5,
-        location: LOCATIONS[0],
+        location: LOCATIONS[0].name,
     },
     {
         id: 3,
         type: "Outgoing",
         date: "2018-01-03",
         boxes: 15,
-        location: LOCATIONS[0],
+        location: LOCATIONS[0].name,
     }
 ];
 
